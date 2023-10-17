@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         /* Verificación que el usuario a registrar no exista en la base de datos */
         let existe = false;
-        if (Array.isArray(usuarios) && usuarios.length > 0) {
+        if (Array.isArray(usuarios)) {
             usuarios.forEach(usuario => {
                 if (usuario.nombre === nuser) {
                     existe = true;
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     carrito: [],
                 }
                 /* Se verifica que la base de datos esté creada, sino la crea */
-                if (usuarios) {
+                if (Array.isArray(usuarios)) {
                     usuarios.push(nuevosdatosUsuario);
                     localStorage.setItem("Usuariosdb", JSON.stringify(usuarios));
                     changeLog();
