@@ -1,0 +1,156 @@
+/*Start login style*/
+
+body {
+  background-image: url('../img/Fondo_login.png'), linear-gradient(to left, #ff914d, #ff3131);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.logo {
+  max-width: 50%;
+}
+
+.sizepers {
+  min-height: 100vh;
+  width: 600px;
+  max-width: 95%;
+}
+
+.container2 {
+  background: rgba(255, 255, 255, 0.945);
+  border-radius: 3vh;
+}
+
+.button-box {
+  /*This part add color to the button div*/
+  min-width: 70%;
+  max-width: 90%;
+  height: fit-content;
+  box-shadow: 0 0 10px 0px rgb(245, 212, 180);
+  border-radius: 30px;
+}
+
+#btn-log,
+#btn-reg {
+  background: transparent;
+  border: 0;
+  outline: none;
+  margin: auto;
+  color: black;
+  display: block;
+  z-index: 1;
+  width: 50%;
+  font-weight: bolder;
+  font-size: 1.5vw;
+}
+
+@media (max-width: 768px) {
+    #btn-log,
+    #btn-reg {
+      font-weight: bolder;
+      font-size: 1.3vh;
+    }
+}
+
+#btn {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, #ff7010, #ff2b06);
+  border-radius: 10vh;
+  transition: .5s;
+  z-index: 0;
+}
+
+#form-log h3 {
+  color: orange;
+}
+
+#form-log input:not(#manteneriniciado) {
+  /*Style in form fields (email, contraseña...)*/
+  border-color: #ff2b06;
+  background: rgba(241, 241, 241, 0.61);
+}
+
+#btn-submitlog {
+  /*Style button "ingresar"*/
+  padding: 10px 30px;
+  display: block;
+  margin: auto;
+  margin-top: 50px;
+  background: linear-gradient(to right, #ff7010, #ff2b06);
+  border: 0;
+  outline: none;
+  border-radius: 30px;
+  text-transform: uppercase;
+  font-size: 20px;
+  color: black;
+}
+
+#btn-submitlog:hover {
+  transform: scale(1.1, 1.3);
+  transition: .5s;
+}
+
+#form-log a {
+  color: black;
+}
+
+#form-log a:hover {
+  color: #ff7010;
+}
+
+.form-control:focus {
+  border-color: black !important;
+  box-shadow: none;
+}
+
+#form-reg input:not(#chk-data) {
+  border-color: #ff2b06;
+  background: rgba(241, 241, 241, 0.61);
+}
+
+#form-reg select {
+  border-color: #ff2b06;
+  filter: brightness(94.5%);
+}
+
+#form-reg select:focus {
+  border-color: black;
+  color: rgb(97, 97, 97);
+  box-shadow: none;
+}
+
+#btn-submitreg {
+  padding: 10px 30px;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  background: linear-gradient(to right, #ff7010, #ff2b06);
+  border: 0;
+  outline: none;
+  border-radius: 30px;
+  text-transform: uppercase;
+  font-size: 20px;
+  color: black;
+}
+
+#btn-submitreg:hover {
+  transform: scale(1.1, 1.3);
+  transition: .5s;
+}
+
+.form-activo {
+  opacity: 1;
+  max-height: 700px;
+  transition: opacity 1.3s ease-in-out, max-height 0.8s ease-in-out;
+}
+
+.form-inactivo {
+  opacity: 0;
+  height: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 1.3s ease-in-out, max-height 0.8s ease-in-out;
+}

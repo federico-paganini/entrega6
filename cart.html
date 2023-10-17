@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>eMercado - Todo lo que busques está aquí</title>
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link href="css/styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <script src="js/lightdarkmode.js"></script>
+  <script src="js/user.js"></script>
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon" sizes="16x16 32x32">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary p-1">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav w-100 justify-content-between mt-lg-0 mt-2">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="categories.html">Categorías</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="sell.html">Vender</a>
+          </li>
+          <li class="nav-item" id="usuario">
+
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <main>
+    <div class="container">
+      <h1 class="text-center mt-2">Carrito de Compras</h1>
+      <h3 class="mb-2">Articulos a comprar:</h3>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle table-striped text-center">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Producto</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="productosCarrito"></tbody>
+          <tfoot>
+      </div>
+      <tr>
+        <td class="text-start" colspan="6">
+          <h3 class="mt-1">Tipo de Envio</h3>
+          <div class="mt-3">
+            <input class="form-check-input" name="opcionCompra" type="radio" />&nbsp; Premium 2 a 5
+            dias (15%)
+          </div>
+          <div>
+            <input class="form-check-input" name="opcionCompra" type="radio" />&nbsp; Express 5 a 8
+            dias (7%)
+          </div>
+          <div>
+            <input class="form-check-input" name="opcionCompra" type="radio" />&nbsp; Standard 12 a
+            15 dias (5%)
+          </div>
+          <br />
+          <h3>Direccion de Envio</h3>
+          <div class="row mt-2">
+            <div class="col-lg-5 col-sm-7">Calle</div>
+            <div class="col-lg-3 col-sm-5">Número</div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-lg-5 col-sm-7"><input class="form-control w-100" /></div>
+            <div class="col-lg-3 col-sm-5"><input class="form-control w-100" /></div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-lg-5 col-sm-7">Esquina</div>
+          </div>
+          <div class="row mt-2 mb-1">
+            <div class="col-lg-5 col-sm-7"><input class="form-control w-100" /></div>
+          </div>
+        </td>
+      </tr>
+      </tfoot>
+      </table>
+    </div>
+  </main>
+  <footer class="text-muted">
+    <div class="container">
+      <p class="float-end">
+        <a href="#">Volver arriba</a>
+      </p>
+      <p>
+        Este sitio forma parte de
+        <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+      </p>
+    </div>
+  </footer>
+  <div id="spinner-wrapper">
+    <div class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="js/init.js"></script>
+  <script src="js/cart.js"></script>
+</body>
+
+</html>

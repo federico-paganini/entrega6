@@ -1,0 +1,392 @@
+.jumbotron,
+.card-body,
+.container,
+.site-header {
+  font-family: 'Verdana', serif !important;
+}
+
+.jumbotron .display-4 {
+  font-weight: bold;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+
+.jumbotron {
+  height: 50vh;
+  padding: 5em inherit;
+  margin-bottom: 0;
+  background-color: #53C0FB;
+  background: url('../img/cover_back.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: black;
+  font-weight: bold;
+}
+
+@media (min-width: 768px) {
+  .jumbotron {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+.jumbotron p:last-child {
+  margin-bottom: 0;
+}
+
+.jumbotron-heading {
+  font-weight: 300;
+}
+
+.jumbotron .container {
+  max-width: 40rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  text-shadow: 1px 1px 2px grey;
+}
+
+.jumbotron .lead {
+  font-size: 38px;
+}
+
+footer {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+footer p {
+  margin-bottom: .25rem;
+}
+
+.site-header a {
+  color: white;
+  transition: ease-in-out color .15s;
+}
+
+.site-header .dropdown-menu a {
+  color: black;
+}
+
+.dropzone {
+  border: 2px dashed #0087F7;
+  border-radius: 5px;
+  background: white;
+}
+
+.img-fit {
+  max-height: 100%;
+}
+
+.alert {
+  position: fixed;
+  top: 80px;
+  width: 50%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+  top: 50%;
+  left: 50%;
+}
+
+.cursor-active {
+  cursor: pointer;
+}
+
+.left {
+  float: left;
+  padding: 4px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 51px;
+  height: 51px;
+  margin: 6px;
+  border: 6px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+#spinner-wrapper {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1021;
+  display: none;
+}
+
+main {
+  min-height: calc(100vh - 210px);
+}
+
+a.custom-card,
+a.custom-card:hover {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+
+/* Cursor para seleccionar productos */
+.cardcursor {
+  cursor: pointer;
+}
+
+.checked {
+  color: orange;
+}
+
+
+/* Buscador Css */
+
+.dropfit {
+  width: max-content;
+  border: none;
+  background: none;
+}
+
+/* Tamaño máximo del carrusel */
+#miCarousel,
+#relacionadosC {
+  max-width: 50%;
+}
+
+.card-pointer {
+  cursor: pointer;
+}
+
+/* Comentario.CCS */
+
+.divGral {
+  margin: 20px;
+  padding: 20px;
+  position: relative;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #ff7010, #ff2b06);
+  border: 2px solid rgba(158, 158, 158, 0.5);
+  box-shadow: 0 1px 2px rgba(158, 158, 158, 0.5);
+  font-family: Arial, Helvetica, sans-serif;
+  flex: 1 1 10px;
+  font-family: 'Raleway';
+  font-style: italic;
+  font-weight: 500;
+  src: url(https://fonts.gstatic.com/s/raleway/v28/1Ptsg8zYS_SKggPNyCg4Q4FqPfE.woff2) format('woff2');
+  unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  width: 90%;
+}
+
+.estrellas {
+  font-size: 30px;
+  color: gold;
+  font-style: normal;
+}
+
+/* Estilos de Estrellas de Calificación */
+.stars-valoration {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.stars-label {
+  font-size: 20px;
+  padding: 2px;
+  color: darkgrey;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+#stars-container input {
+  display: none;
+}
+
+.stars-label:hover,
+.stars-label.checked {
+  color: gold;
+  text-shadow: 0 0 10px #952;
+}
+
+/* Aqui comienza el estilo para el menu desplegable del usuario*/
+
+#usuario:hover {
+  background-color: #ff2b06;
+  transition: 0.5s;
+}
+
+.userclicked {
+  background-color: #ff2b06;
+}
+
+/* Cambios para manejar el background del menú de usuario según el modo seleccionado */
+.back-dkmode {
+  background-color: #28242cbd !important;
+}
+
+.back-lgmode {
+  background-color: rgba(255, 255, 255, 0.658);
+}
+
+/* Hover por defecto de bootstrap cambiado */
+
+.dropdown-item:hover {
+  background-color: #ff2b06;
+  transition: 0.5s;
+}
+
+.nav-item:hover {
+  background-color: #ff2b06;
+  transition: 0.5s;
+}
+
+/* Light - Dark Mode Switch Styles */
+.contain {
+  margin: 5px;
+}
+
+.toggleswitch span {
+  display: inline-block;
+  position: relative;
+  background: #2c2c2c;
+  min-width: 60px;
+  min-height: 30px;
+  border-radius: 20px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, .2);
+  transition: .5s;
+  cursor: pointer;
+}
+
+.toggleswitch span::after {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 20px;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to right, #ff7010, #ff2b06);
+  transform: scale(1.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+  transition: .5s;
+}
+
+.toggleswitch input:checked~span {
+  background: linear-gradient(to right, #ff7010, #ff2b06);
+  transition: 1s;
+}
+
+.toggleswitch input:checked~span::after {
+  transform: scale(1.1) translate(30px);
+  background: #2c2c2c;
+}
+
+.toggleswitch input {
+  display: none;
+}
+
+.toggleswitch .off {
+  position: absolute;
+  color: white;
+  text-shadow: 0 0 8px yellow;
+  font-size: 28px;
+  left: 1.2px;
+  top: -7px;
+  z-index: 1;
+  transition: .5s;
+}
+
+.toggleswitch .on {
+  position: absolute;
+  color: black;
+  text-shadow: 0 0 7px white;
+  font-size: 24px;
+  left: 5px;
+  top: -2px;
+  z-index: 1;
+  transition: .5s;
+  opacity: 0;
+}
+
+.toggleswitch input:checked~span .off {
+  transform: translate(30px);
+  opacity: 0;
+}
+
+.toggleswitch input:checked~span .on {
+  transform: translate(30px);
+  opacity: 1;
+}
+
+#imageCart{
+
+  width: 50px;
+
+}
+
+.small-input-carrito {
+    min-width: 60px;
+    max-width: 100%; 
+    width: 5vw;  
+}
+
+.negrita {
+  font-weight: bold;
+}
