@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-    if (!localStorage.getItem("isLoggedIn")) {
+    if (localStorage.getItem('isLoggedIn') || sessionStorage.getItem('isLoggedIn'))  {
+        
+    } else {
         const usuario = document.getElementById("usuario");
         usuario.remove();
     }
@@ -96,8 +98,9 @@ document.addEventListener("DOMContentLoaded", function () {
     function CerrarSesion() {
         if(dataLocation) {
             localStorage.removeItem("UsuarioActivo");
+            localStorage.removeItem("isLoggedIn");
         } else {
-            sessionStorage.removeItem("UsuarioActivo");
+            sessionStorage.clear();
         }
         localStorage.removeItem("carrito")
         localStorage.removeItem("infoProducto")

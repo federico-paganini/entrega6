@@ -42,7 +42,7 @@ cambiarFondo();
 document.addEventListener("DOMContentLoaded", function () {
 
     const formlog = document.querySelector("#form-log");
-    const usuarios = JSON.parse(localStorage.getItem("Usuariosdb"));
+    let usuarios = JSON.parse(localStorage.getItem("Usuariosdb"));
 
     formlog.addEventListener("submit", function (event) {
         event.preventDefault();
@@ -54,8 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
         ahora revisa si el usuario existe */
         let usuarioinlog;
         let existe = false;
-
-        if (Array.isArray(usuarios) && usuarios.length > 0) {
+        
+        if (Array.isArray(usuarios)) {
             usuarios.forEach(usuario => {
                 if (usuario.nombre === user.value || usuario.correo === user.value) {
                     existe = true;
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (mantsesion.checked) {
                     alert("Logueado correctamente");
                     sessionStorage.setItem("dataLocation", true);
-                    localStorage.setItem('isLoggedIn', true);
+                    localStorage.setItem('isLoggedIn', 'true');
                     localStorage.setItem("UsuarioActivo", usuarioinlog.nombre);
                     setTimeout(function () {
                         window.location.href = "index.html";
