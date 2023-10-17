@@ -150,10 +150,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     usuarios.push(nuevosdatosUsuario);
                     localStorage.setItem("Usuariosdb", JSON.stringify(usuarios));
                     changeLog();
+                    formreg.reset();
                 } else {
                     let iniciarUsuarios = [nuevosdatosUsuario];
                     localStorage.setItem("Usuariosdb", JSON.stringify(iniciarUsuarios));
                     changeLog();
+                    formreg.reset();
                 }
             } else {
                 if (ndep === "Departamento") {
