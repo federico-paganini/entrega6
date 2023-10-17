@@ -55,23 +55,22 @@ document.addEventListener("DOMContentLoaded", function () {
         let usuarioinlog;
         let existe = false;
 
-        if (usuarios !== "null") {
-            if (usuarios.length > 0) {
-                usuarios.forEach(usuario => {
-                    if (usuario.nombre === user.value) {
+        if (Array.isArray(usuarios) && usuarios.length > 0) {
+            usuarios.forEach(usuario => {
+                if (usuario.nombre === user.value) {
+                    existe = true;
+                    usuarioinlog = usuario;
+                } else {
+                    if (usuario.correo === user.value) {
                         existe = true;
                         usuarioinlog = usuario;
                     } else {
-                        if (usuario.correo === user.value) {
-                            existe = true;
-                            usuarioinlog = usuario;
-                        } else {
-                            existe = false;
-                        }
+                        existe = false;
                     }
-                })
-            }
+                }
+            })
         }
+
 
         /*Verifica si el usuario existe en la "base de datos": Si éste no existe, emite un mensaje para registarlo.
         Si el usuario existe, verifica los datos en la "base de datos" */
@@ -124,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         /* Verificación que el usuario a registrar no exista en la base de datos */
         let existe = false;
-        if (usuarios) {
+        if (Array.isArray(usuarios) && usuarios.length > 0) {
             usuarios.forEach(usuario => {
                 if (usuario.nombre !== nuser) {
                     existe = false;
@@ -133,6 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             })
         }
+        
         if (existe) {
             alert("El usuario ingresado ya existe");
         } else {
@@ -170,8 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
         }
-    });
-    console.log(usuarios);
+    })
 });
 
 
