@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let existe = false;
 
         if (usuarios) {
-            if (usuarios.length) {
+            if (usuarios.length > 0) {
                 usuarios.forEach(usuario => {
                     if (usuario.nombre === user.value) {
                         existe = true;
