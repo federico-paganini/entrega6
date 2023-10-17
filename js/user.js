@@ -5,14 +5,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const usuario = document.getElementById("usuario");
         usuario.remove();
     }
-    const baseDatos = JSON.parse(localStorage.getItem("Usuariosdb"));
+    let baseDatos = JSON.parse(localStorage.getItem("Usuariosdb"));
     let usuarioActivo;
     const dataLocation = sessionStorage.getItem("dataLocation");
     /* Verificar si los datos están en session storage o local storage y traer los datos de usuario */
     if (dataLocation) {
         usuarioActivo = baseDatos.find(usuario => usuario.nombre === localStorage.getItem("UsuarioActivo"));
+        localStorage.setItem("darktheme", usuarioActivo.selectedtheme);
     } else {
         usuarioActivo = baseDatos.find(usuario => usuario.nombre === sessionStorage.getItem("UsuarioActivo"));
+        localStorage.setItem("darktheme", usuarioActivo.selectedtheme);
     }
     
     let email = usuarioActivo.nombre;
@@ -99,8 +101,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if(dataLocation) {
             localStorage.removeItem("UsuarioActivo");
             localStorage.removeItem("isLoggedIn");
+            localStorage.setItem('Usuariosdb', JSON.stringify(baseDatos));
         } else {
             sessionStorage.clear();
+            localStorage.setItem('Usuariosdb', JSON.stringify(baseDatos));
         }
         localStorage.removeItem("carrito")
         localStorage.removeItem("infoProducto")
@@ -125,12 +129,12 @@ document.addEventListener("DOMContentLoaded", function () {
     ligthdarkswitch.addEventListener("click", (event) => {
         event.stopPropagation();
         if (ligthdarkswitch.checked) {
-            usuarioActivo.selectedtheme = false;
+            usuarioActivo.selectedtheme = true;
             localStorage.setItem("darktheme", usuarioActivo.selectedtheme);
             document.documentElement.setAttribute("data-bs-theme", "dark");
             usermenubox.classList.add("back-dkmode");
         } else {
-            usuarioActivo.selectedtheme = true;
+            usuarioActivo.selectedtheme = false;
             localStorage.setItem("darktheme", usuarioActivo.selectedtheme);
             document.documentElement.setAttribute("data-bs-theme", "light");
             usermenubox.classList.remove("back-dkmode");
