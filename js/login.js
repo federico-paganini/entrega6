@@ -55,20 +55,22 @@ document.addEventListener("DOMContentLoaded", function () {
         let usuarioinlog;
         let existe = false;
 
-        if (usuarios.length || usuarios) {
-            usuarios.forEach(usuario => {
-                if (usuario.nombre === user.value) {
-                    existe = true;
-                    usuarioinlog = usuario;
-                } else {
-                    if(usuario.correo === user.value) {
+        if (usuarios) {
+            if (usuarios.length) {
+                usuarios.forEach(usuario => {
+                    if (usuario.nombre === user.value) {
                         existe = true;
                         usuarioinlog = usuario;
                     } else {
-                        existe = false;
+                        if (usuario.correo === user.value) {
+                            existe = true;
+                            usuarioinlog = usuario;
+                        } else {
+                            existe = false;
+                        }
                     }
-                }
-            })
+                })
+            }
         }
         /*Verifica si el usuario existe en la "base de datos": Si éste no existe, emite un mensaje para registarlo.
         Si el usuario existe, verifica los datos en la "base de datos" */
