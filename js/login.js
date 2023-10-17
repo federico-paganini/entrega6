@@ -96,6 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
             /* Emite un mensaje si el usuario no existe y redirige al login si el nuevo usuario desea registrarse */
             if (confirm("El usuario ingresado no existe.\n¿Desea registrarse?")) {
                 changeReg();
+                formlog.reset();
             }
         }
     });
