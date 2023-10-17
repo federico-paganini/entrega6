@@ -42,13 +42,13 @@ cambiarFondo();
 document.addEventListener("DOMContentLoaded", function () {
 
     const formlog = document.querySelector("#form-log");
-    const usuarios = JSON.parse(localStorage.getItem("Usuariosdb"));
 
     formlog.addEventListener("submit", function (event) {
         event.preventDefault();
         const user = formlog.querySelector("#User");
         const pass = formlog.querySelector("#Pass");
         const mantsesion = formlog.querySelector("#manteneriniciado");
+        const usuarios = JSON.parse(localStorage.getItem("Usuariosdb"));
 
         /* Creamos en el registro una "base de datos local" para los usuarios y el login 
         ahora revisa si el usuario existe */
@@ -103,6 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     formreg.addEventListener("submit", function (event) {
         event.preventDefault();
+        const usuarios = JSON.parse(localStorage.getItem("Usuariosdb"));
         let nuevosdatosUsuario = {};
         const nuser = document.getElementById("New-User").value;
         const nemail = document.getElementById("New-Mail").value;
