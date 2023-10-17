@@ -57,16 +57,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (Array.isArray(usuarios) && usuarios.length > 0) {
             usuarios.forEach(usuario => {
-                if (usuario.nombre === user.value) {
+                if (usuario.nombre === user.value || usuario.correo === user.value) {
                     existe = true;
                     usuarioinlog = usuario;
-                } else {
-                    if (usuario.correo === user.value) {
-                        existe = true;
-                        usuarioinlog = usuario;
-                    } else {
-                        existe = false;
-                    }
+                    return;
                 }
             })
         }
@@ -125,14 +119,13 @@ document.addEventListener("DOMContentLoaded", function () {
         let existe = false;
         if (Array.isArray(usuarios) && usuarios.length > 0) {
             usuarios.forEach(usuario => {
-                if (usuario.nombre !== nuser) {
-                    existe = false;
-                } else {
+                if (usuario.nombre === nuser) {
                     existe = true;
+                    return;
                 }
             })
         }
-        
+
         if (existe) {
             alert("El usuario ingresado ya existe");
         } else {
