@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let usuarioinlog;
         let existe = false;
 
-        if (usuarios) {
+        if (usuarios !== "null") {
             if (usuarios.length > 0) {
                 usuarios.forEach(usuario => {
                     if (usuario.nombre === user.value) {
@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
             }
         }
+
         /*Verifica si el usuario existe en la "base de datos": Si éste no existe, emite un mensaje para registarlo.
         Si el usuario existe, verifica los datos en la "base de datos" */
         if (existe) {
