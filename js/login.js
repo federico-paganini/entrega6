@@ -42,7 +42,7 @@ cambiarFondo();
 document.addEventListener("DOMContentLoaded", function () {
 
     const formlog = document.querySelector("#form-log");
-    let usuarios = JSON.parse(localStorage.getItem("Usuariosdb"));
+    const usuarios = JSON.parse(localStorage.getItem("Usuariosdb"));
 
     formlog.addEventListener("submit", function (event) {
         event.preventDefault();
