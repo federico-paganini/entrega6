@@ -3,7 +3,17 @@ document.addEventListener("DOMContentLoaded", function () {
         const usuario = document.getElementById("usuario");
         usuario.remove();
     }
-    let email = localStorage.getItem("email");
+    const baseDatos = JSON.parse(localStorage.getItem("Usuariosdb"));
+    let usuarioActivo;
+    const dataLocation = sessionStorage.getItem("dataLocation");
+    /* Verificar si los datos están en session storage o local storage y traer los datos de usuario */
+    if (dataLocation) {
+        usuarioActivo = baseDatos.find(usuario => usuario.nombre === localStorage.getItem("UsuarioActivo"));
+    } else {
+        usuarioActivo = baseDatos.find(usuario => usuario.nombre === sessionStorage.getItem("UsuarioActivo"));
+    }
+    
+    let email = usuarioActivo.nombre;
     let li_nav = document.getElementById("usuario");
 
     li_nav.classList.add("nav-item");
@@ -81,22 +91,27 @@ document.addEventListener("DOMContentLoaded", function () {
             li_nav.classList.add("userclicked");
         }
     })
-    
-//Se borran los datos del carrito almacenados en localStorage al cerrar sesión
-    function CerrarSesion(){
+
+    //Se borran los datos del carrito almacenados en localStorage al cerrar sesión
+    function CerrarSesion() {
+        if(dataLocation) {
+            localStorage.removeItem("UsuarioActivo");
+        } else {
+            sessionStorage.removeItem("UsuarioActivo");
+        }
         localStorage.removeItem("carrito")
         localStorage.removeItem("infoProducto")
-        window.location.href="login.html"
+        window.location.href = "login.html"
     };
 
-    const BotonCerrarSesion=document.getElementById("CerrarSesion");
+    const BotonCerrarSesion = document.getElementById("CerrarSesion");
 
-        if (BotonCerrarSesion) {
-            BotonCerrarSesion.addEventListener("click", (e) => {
-                e.preventDefault();
-                CerrarSesion();
-            });
-        };
+    if (BotonCerrarSesion) {
+        BotonCerrarSesion.addEventListener("click", (e) => {
+            e.preventDefault();
+            CerrarSesion();
+        });
+    };
 
     //Eventos para cambiar el tema de claro a osuro. Algunos elementos no se cambiaban con activar el switch
     //ya que son personalizados, por lo que se trataron de forma específica
@@ -107,11 +122,13 @@ document.addEventListener("DOMContentLoaded", function () {
     ligthdarkswitch.addEventListener("click", (event) => {
         event.stopPropagation();
         if (ligthdarkswitch.checked) {
-            localStorage.setItem("darktheme", true);
+            usuarioActivo.selectedtheme = false;
+            localStorage.setItem("darktheme", usuarioActivo.selectedtheme);
             document.documentElement.setAttribute("data-bs-theme", "dark");
             usermenubox.classList.add("back-dkmode");
         } else {
-            localStorage.setItem("darktheme", false);
+            usuarioActivo.selectedtheme = true;
+            localStorage.setItem("darktheme", usuarioActivo.selectedtheme);
             document.documentElement.setAttribute("data-bs-theme", "light");
             usermenubox.classList.remove("back-dkmode");
         }
