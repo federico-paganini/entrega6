@@ -7,52 +7,51 @@ function actualizarSubtotal(cantIngresada, costoUnitario) {
 
     //PONER DATOS EN LA TABLA DE COSTOS 
 
-let Subtotal = document.getElementById("Subtotal");
-let costoEnvio;
-let ponercostoenvio= document.getElementById("costoEnvio")
-let totalFinal= document.getElementById("totalFinal")
+    let Subtotal = document.getElementById("Subtotal");
+    let costoEnvio;
+    let ponercostoenvio = document.getElementById("costoEnvio")
+    let totalFinal = document.getElementById("totalFinal")
 
 
-var opciones = document.getElementsByName("opcionCompra");
+    var opciones = document.getElementsByName("opcionCompra");
 
-let opcionSeleccionada; 
+    let opcionSeleccionada;
 
-for (var i = 0; i < opciones.length; i++) {
-  opciones[i].addEventListener("change", function() {
-    for (var j = 0; j < opciones.length; j++) {
-      if (opciones[j].checked) {
-        opcionSeleccionada=opciones[j].value;
-        break;
-      }
+    for (var i = 0; i < opciones.length; i++) {
+        opciones[i].addEventListener("change", function () {
+            for (var j = 0; j < opciones.length; j++) {
+                if (opciones[j].checked) {
+                    opcionSeleccionada = opciones[j].value;
+                    break;
+                }
+            }
+            console.log("esta es la opcion seleccionada" + opcionSeleccionada);
+
+            if (opcionSeleccionada == 1) {
+                costoEnvio = resultado * 0.15;
+                ponercostoenvio.textContent = `${costoEnvio}`
+            }
+            else if (opcionSeleccionada == 2) {
+                costoEnvio = resultado * (0.07)
+                ponercostoenvio.textContent = `${costoEnvio}`
+            }
+            else if (opcionSeleccionada == 3) {
+                costoEnvio = resultado * 0.05;
+                ponercostoenvio.textContent = `${costoEnvio}`
+            }
+            else {
+                console.log("no se encuentra un valor de envio");
+            }
+
+            let totalFinalValor = resultado + costoEnvio;
+            totalFinal.textContent = `${totalFinalValor}`;
+
+        });
     }
-    console.log("esta es la opcion seleccionada"+ opcionSeleccionada);
-
-if (opcionSeleccionada==1){
-    costoEnvio= resultado*0.15;
-    ponercostoenvio.textContent=`${costoEnvio}`
-}
-else if(opcionSeleccionada==2){
-    costoEnvio= resultado*(0.07)
-    ponercostoenvio.textContent=`${costoEnvio}`
-}
-else if(opcionSeleccionada==3){
-    costoEnvio= resultado*0.05;
-    ponercostoenvio.textContent=`${costoEnvio}`
-}
-else{
-    console.log("no se encuentra un valor de envio");
-}
-
-let totalFinalValor = resultado + costoEnvio;
-totalFinal.textContent = `${totalFinalValor}`;
-
-  });
-}
 
 
 
-Subtotal.textContent=`${resultado}`
-
+    Subtotal.textContent = `${resultado}`
 }
 
 function subTotal(costoUnitario, cantidad) {
@@ -98,13 +97,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         <button class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button>
                     </td>
                 </tr>`;
-               
+
     }
 
     const infoProducto = JSON.parse(localStorage.getItem('infoProducto')) || [];
-        infoProducto.forEach((DatosProducto) => {
+    infoProducto.forEach((DatosProducto) => {
         agregarProducto(DatosProducto.nombre, DatosProducto.moneda, DatosProducto.imagen, DatosProducto.precio, DatosProducto.cantidad);
-            });
+    });
 });
 
 
