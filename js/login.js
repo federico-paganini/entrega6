@@ -114,6 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const ndir = document.getElementById("New-Dir").value;
         const confpass = document.getElementById("confpass").value;
         const ndep = document.getElementById("Departamento").value;
+        const nnum = document.getElementById("New-Num").value;
 
         /*Verificación de datos para registro de nuevo usuario correcto */
 
@@ -138,9 +139,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     nombre: nuser,
                     email: nemail,
                     telefonos: [nphone],
-                    departamento: ndep,
-                    ciudad: ncity,
-                    direccion: ndir,
+                    direcciones: [{
+                        default: true,
+                        tipo: "Predeterminado",
+                        departamento: ndep,
+                        ciudad: ncity,
+                        calle: ndir,
+                        numero: nnum,
+                    }],
                     contraseña: confpass,
                     selectedtheme: false,
                     carrito: [],

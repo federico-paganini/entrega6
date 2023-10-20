@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const usuario = document.getElementById("usuario");
         usuario.remove();
     }
-    let baseDatos = JSON.parse(localStorage.getItem("Usuariosdb"));
+    const baseDatos = JSON.parse(localStorage.getItem("Usuariosdb"));
     let usuarioActivo;
     const dataLocation = sessionStorage.getItem("dataLocation");
     /* Verificar si los datos están en session storage o local storage y traer los datos de usuario */
@@ -99,15 +99,14 @@ document.addEventListener("DOMContentLoaded", function () {
     //Se borran los datos del carrito almacenados en localStorage al cerrar sesión
     function CerrarSesion() {
         if(dataLocation) {
-            localStorage.removeItem("UsuarioActivo");
-            localStorage.removeItem("isLoggedIn");
+            usuarioActivo.carrito = localStorage.getItem("infoProducto");
+            localStorage.clear();
             localStorage.setItem('Usuariosdb', JSON.stringify(baseDatos));
         } else {
+            usuarioActivo.carrito = localStorage.getItem("infoProducto");
             sessionStorage.clear();
             localStorage.setItem('Usuariosdb', JSON.stringify(baseDatos));
         }
-        localStorage.removeItem("carrito")
-        localStorage.removeItem("infoProducto")
         window.location.href = "login.html"
     };
 
