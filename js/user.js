@@ -7,14 +7,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const baseDatos = JSON.parse(localStorage.getItem("Usuariosdb"));
     let usuarioActivo;
-    const dataLocation = sessionStorage.getItem("dataLocation");
+    const dataLocation = localStorage.getItem("dataLocation");
     /* Verificar si los datos están en session storage o local storage y traer los datos de usuario */
     if (dataLocation) {
         usuarioActivo = baseDatos.find(usuario => usuario.nombre === localStorage.getItem("UsuarioActivo"));
         localStorage.setItem("darktheme", usuarioActivo.selectedtheme);
+        localStorage.setItem("infoProducto", usuarioActivo.carrito);
     } else {
         usuarioActivo = baseDatos.find(usuario => usuario.nombre === sessionStorage.getItem("UsuarioActivo"));
         localStorage.setItem("darktheme", usuarioActivo.selectedtheme);
+        localStorage.setItem("infoProducto", usuarioActivo.carrito);
     }
     
     let email = usuarioActivo.nombre;

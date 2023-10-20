@@ -3,7 +3,20 @@ function actualizarSubtotal(cantIngresada, costoUnitario) {
     const impResult = cantIngresada.parentElement.parentElement.nextElementSibling;
     const moneda = impResult.innerText.split(" ")[0];
     const resultado = costoUnitario * cantidad;
+
+    /* Actualizar cantidad de elementos en el carrito del Usuario */
+    const fila = cantIngresada.closest('tr');
+    const infoProducto = JSON.parse(localStorage.getItem('infoProducto')) || [];
+    const nombreProducto = fila.querySelector('td:nth-child(2)').textContent;
+
     impResult.innerText = `${moneda} ${resultado}`;
+
+
+    const index = infoProducto.findIndex(item => item.nombre === nombreProducto);
+    if (index !== -1) {
+        infoProducto[index].cantidad = cantidad;
+        localStorage.setItem('infoProducto', JSON.stringify(infoProducto));
+    }
 
     //PONER DATOS EN LA TABLA DE COSTOS 
 
@@ -60,6 +73,7 @@ function subTotal(costoUnitario, cantidad) {
 
 document.addEventListener('DOMContentLoaded', function () {
     const productosCarrito = document.getElementById("productosCarrito");
+    const nsubtotal = document.getElementById("Subtotal");
 
     fetch(`https://japceibal.github.io/emercado-api/user_cart/25801.json`)
         .then(response => response.json())
@@ -67,6 +81,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             cartData.articles.forEach(product => {
                 agregarProductoFecheado(product);
+                let ncosto = product.count * product.unitCost;
+                nsubtotal.innerHTML = `USD ${ncosto}`;
             });
         })
         .catch(error => {

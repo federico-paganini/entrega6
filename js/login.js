@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 /* Verifica si el usuario quiere mantener la sesión abierta aún así se cierre el navegador */
                 if (mantsesion.checked) {
                     alert("Logueado correctamente");
-                    sessionStorage.setItem("dataLocation", true);
+                    localStorage.setItem("dataLocation", true);
                     localStorage.setItem('isLoggedIn', 'true');
                     localStorage.setItem("UsuarioActivo", usuarioinlog.nombre);
                     setTimeout(function () {
