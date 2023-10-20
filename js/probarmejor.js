@@ -15,6 +15,7 @@ function checkLogin() {
   if (localStorage.getItem('isLoggedIn') || sessionStorage.getItem('isLoggedIn')) {
 
   } else {
+    localStorage.removeItem("darktheme");
     showAlert("¡No estás loggeado!");
     redirectToPageWithDelay('login.html', 3, 5);
   }

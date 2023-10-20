@@ -1,7 +1,11 @@
-const settedmode = localStorage.getItem("darktheme");
+document.addEventListener("DOMContentLoaded", () => {
 
-if (settedmode === "true") {
-    document.documentElement.setAttribute("data-bs-theme", "dark");
-} else {
-    document.documentElement.setAttribute("data-bs-theme", "light");
-}
+
+    const settedmode = localStorage.getItem("darktheme");
+
+    if (settedmode === "true") {
+        document.documentElement.setAttribute("data-bs-theme", "dark");
+    } else {
+        document.documentElement.setAttribute("data-bs-theme", "light");
+    }
+});

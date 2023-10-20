@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
         if (Array.isArray(usuarios)) {
             usuarios.forEach(usuario => {
-                if (usuario.nombre === user.value || usuario.correo === user.value) {
+                if (usuario.nombre === user.value || usuario.email === user.value) {
                     existe = true;
                     usuarioinlog = usuario;
                     return;
