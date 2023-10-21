@@ -8,11 +8,12 @@ document.addEventListener("DOMContentLoaded", () => {
         usuarioActivo = baseDatos.find(usuario => usuario.nombreUsuario === localStorage.getItem("UsuarioActivo"));
         localStorage.setItem("darktheme", usuarioActivo.selectedtheme);
         localStorage.setItem("infoProducto", JSON.stringify(usuarioActivo.carrito));
-        localStorage.setItem("domicilios", JSON.stringify(usuarioActivo.direcciones));
+        localStorage.setItem("dbUsuario", JSON.stringify(usuarioActivo));
     } else {
         usuarioActivo = baseDatos.find(usuario => usuario.nombreUsuario === sessionStorage.getItem("UsuarioActivo"));
         localStorage.setItem("darktheme", usuarioActivo.selectedtheme);
         localStorage.setItem("infoProducto", JSON.stringify(usuarioActivo.carrito));
         localStorage.setItem("domicilios", JSON.stringify(usuarioActivo.direcciones));
+        localStorage.setItem("dbUsuario", JSON.stringify(usuarioActivo));
     }
 });

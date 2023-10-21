@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
         }
 
-
+        
         /*Verifica si el usuario existe en la "base de datos": Si éste no existe, emite un mensaje para registarlo.
         Si el usuario existe, verifica los datos en la "base de datos" */
         if (existe) {

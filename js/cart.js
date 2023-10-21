@@ -127,24 +127,121 @@ document.addEventListener('DOMContentLoaded', function () {
     /* Añadir tarjeta con dirección de envío */
 
     const adresscard = document.getElementById("sendAdress");
-    const adressuser = JSON.parse(localStorage.getItem("domicilios"));
+    const adressuser = JSON.parse(localStorage.getItem("dbUsuario"));
+    const activeadress = (adressuser.direcciones).find(direccion => direccion.default == true);
+    let icon = selectIcon(activeadress.tipo);
+    let phone = adressuser.telefonos[0];
 
-    adresscard.innerHTML = `
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="..." class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+    selectIcon((activeadress.tipo), icon);
+
+    adresscard.innerHTML += `
+        <h5 class="card-title">${icon} ${activeadress.calle} ${activeadress.numero}</h5>
+        <p class="card-text mb-2">${activeadress.ciudad} - ${activeadress.departamento}</p>
+    `
+
+    if (activeadress.indicaciones != "") {
+        adresscard.innerHTML += `
+        <p class="card-text mb-2">${activeadress.indicaciones}</p>
+        `
+    }
+
+    adresscard.innerHTML += `
+        <p class="card-text mb-4"><small class="text-body-secondary">${adressuser.nombre} ${adressuser.apellido} - ${phone}</small></p>
+        <a class="btn btn-link btn-sm p-0 m-0" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Modificar dirección de envío / Contacto</a>
+    `
+
+
+
+    /* Modificar datos de envío y contacto a través de modal */
+
+    const moddir = document.getElementById("modifyadress");
+    const modcont = document.getElementById("modifycontact");
+
+    (adressuser.direcciones).forEach(direccion => {
+        let alldirs = document.createElement("button");
+        alldirs.classList.add("text-decoration-none");
+        alldirs.setAttribute("role", "button");
+        alldirs.setAttribute("onclick", "funcionprueba()")
+        alldirs.innerHTML += `
+            <div class="card mb-3 bg-body-tertiary" style="max-width: 500px;">
+                <div class="row g-0">
+                    <div class="col-1">
+                        <span class="rounded-start card-border"><span>
+                    </div>
+                    <div class="col-11">
+                        <div class="ms-3 card-body">
+                            <h5 class="card-title">${(selectIcon(direccion.tipo))} ${direccion.calle} ${direccion.numero}</h5>
+                            <p class="card-text">${direccion.ciudad} - ${direccion.departamento}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        S</div>
-    `
+        `;
+
+      
+        moddir.appendChild(alldirs);
+
+        moddir.innerHTML += `
+        <button class="btn btn-outline-secondary btn-sm" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal"><i class="bi bi-plus-square"></i> Agregar nueva dirección</button>
+    `;
+
+
+
+        /* Agregar nueva dirección de envío */
+        const formndir = document.getElementById("nuevoenvio");
+        console.log(adressuser);
+
+        formndir.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const ncity = document.getElementById("New-City").value;
+            const ndir = document.getElementById("New-Dir").value;
+            const ndep = document.getElementById("Departamento").value;
+            const nnum = document.getElementById("New-Num").value;
+            const infoad = document.getElementById("infoadd").value;
+            const typedom = document.getElementsByName("dirtype");
+            let selectedirtype;
+
+            typedom.forEach(option => {
+                if (option.checked) {
+                    selectedirtype = option.value;
+                    return;
+                }
+            })
+            let ndeliver;
+
+            ndeliver = {
+                default: false,
+                tipo: selectedirtype,
+                departamento: ndep,
+                ciudad: ncity,
+                calle: ndir,
+                numero: nnum,
+                indicaciones: infoad,
+            };
+
+            (adressuser.direcciones).push(ndeliver);
+            alert("Nueva dirección añadida");
+            console.log(adressuser);
+        })
+    });
+
 });
 
+function selectIcon(domicilio) {
+    if (domicilio === "house") {
+        return `<i class="bi bi-house-fill"></i>`;
+    } else {
+        if (domicilio === "building") {
+            return `<i class="bi bi-building-fill"></i>`;
+        } else {
+            if (domicilio === "work") {
+                return `<i class="bi bi-briefcase-fill"></i>`;
+            }
+        }
+    }
+};
 
+function funcionprueba() {
+    console.log("hola");
+} 
