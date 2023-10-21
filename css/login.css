@@ -143,7 +143,7 @@ body {
 
 .form-activo {
   opacity: 1;
-  max-height: 700px;
+  max-height: 1000px;
   transition: opacity 1.3s ease-in-out, max-height 0.8s ease-in-out;
 }
 

@@ -8,18 +8,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const baseDatos = JSON.parse(localStorage.getItem("Usuariosdb"));
     let usuarioActivo;
     const dataLocation = localStorage.getItem("dataLocation");
-    /* Verificar si los datos están en session storage o local storage y traer los datos de usuario */
+    /* Verificar si los datos están en session storage o local storage y traer los datos de usuario:
+    Tema seleccionado, carrito, etc. */
     if (dataLocation) {
-        usuarioActivo = baseDatos.find(usuario => usuario.nombre === localStorage.getItem("UsuarioActivo"));
-        localStorage.setItem("darktheme", usuarioActivo.selectedtheme);
-        localStorage.setItem("infoProducto", usuarioActivo.carrito);
+        usuarioActivo = baseDatos.find(usuario => usuario.nombreUsuario === localStorage.getItem("UsuarioActivo"));
     } else {
-        usuarioActivo = baseDatos.find(usuario => usuario.nombre === sessionStorage.getItem("UsuarioActivo"));
-        localStorage.setItem("darktheme", usuarioActivo.selectedtheme);
-        localStorage.setItem("infoProducto", usuarioActivo.carrito);
+        usuarioActivo = baseDatos.find(usuario => usuario.nombreUsuario === sessionStorage.getItem("UsuarioActivo"));
     }
     
-    let email = usuarioActivo.nombre;
+    let email = localStorage.getItem("UsuarioActivo");
     let li_nav = document.getElementById("usuario");
 
     li_nav.classList.add("nav-item");
@@ -101,11 +98,12 @@ document.addEventListener("DOMContentLoaded", function () {
     //Se borran los datos del carrito almacenados en localStorage al cerrar sesión
     function CerrarSesion() {
         if(dataLocation) {
-            usuarioActivo.carrito = localStorage.getItem("infoProducto");
+            usuarioActivo.carrito = JSON.parse(localStorage.getItem("infoProducto"));
             localStorage.clear();
             localStorage.setItem('Usuariosdb', JSON.stringify(baseDatos));
         } else {
-            usuarioActivo.carrito = localStorage.getItem("infoProducto");
+            usuarioActivo.carrito = JSON.parse(localStorage.getItem("infoProducto"));
+            localStorage.clear();
             sessionStorage.clear();
             localStorage.setItem('Usuariosdb', JSON.stringify(baseDatos));
         }
@@ -131,11 +129,13 @@ document.addEventListener("DOMContentLoaded", function () {
         event.stopPropagation();
         if (ligthdarkswitch.checked) {
             usuarioActivo.selectedtheme = true;
+            localStorage.setItem('Usuariosdb', JSON.stringify(baseDatos));
             localStorage.setItem("darktheme", usuarioActivo.selectedtheme);
             document.documentElement.setAttribute("data-bs-theme", "dark");
             usermenubox.classList.add("back-dkmode");
         } else {
             usuarioActivo.selectedtheme = false;
+            localStorage.setItem('Usuariosdb', JSON.stringify(baseDatos));
             localStorage.setItem("darktheme", usuarioActivo.selectedtheme);
             document.documentElement.setAttribute("data-bs-theme", "light");
             usermenubox.classList.remove("back-dkmode");

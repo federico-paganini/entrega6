@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
         if (Array.isArray(usuarios)) {
             usuarios.forEach(usuario => {
-                if (usuario.nombre === user.value || usuario.email === user.value) {
+                if (usuario.nombreUsuario === user.value || usuario.email === user.value) {
                     existe = true;
                     usuarioinlog = usuario;
                     return;
@@ -76,14 +76,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     alert("Logueado correctamente");
                     localStorage.setItem("dataLocation", true);
                     localStorage.setItem('isLoggedIn', 'true');
-                    localStorage.setItem("UsuarioActivo", usuarioinlog.nombre);
+                    localStorage.setItem("UsuarioActivo", usuarioinlog.nombreUsuario);
                     setTimeout(function () {
                         window.location.href = "index.html";
                     }, 2000);
                 } else {
                     alert("Logueado correctamente");
                     sessionStorage.setItem('isLoggedIn', 'true');
-                    sessionStorage.setItem("UsuarioActivo", usuarioinlog.nombre);
+                    sessionStorage.setItem("UsuarioActivo", usuarioinlog.nombreUsuario);
                     setTimeout(function () {
                         window.location.href = "index.html";
                     }, 2000);
@@ -115,6 +115,18 @@ document.addEventListener("DOMContentLoaded", function () {
         const confpass = document.getElementById("confpass").value;
         const ndep = document.getElementById("Departamento").value;
         const nnum = document.getElementById("New-Num").value;
+        const infoad = document.getElementById("infoadd").value;
+        const typedom = document.getElementsByName("dirtype");
+        const nname = document.getElementById("New-Name").value;
+        const nsurn = document.getElementById("New-Surn").value;
+        let selectedirtype;
+
+        typedom.forEach(option => {
+            if(option.checked) {
+                selectedirtype = option.value;
+                return;
+            }
+        })
 
         /*Verificación de datos para registro de nuevo usuario correcto */
 
@@ -122,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let existe = false;
         if (Array.isArray(usuarios)) {
             usuarios.forEach(usuario => {
-                if (usuario.nombre === nuser) {
+                if (usuario.nombreUsuario === nuser) {
                     existe = true;
                     return;
                 }
@@ -136,16 +148,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 /*Se crea el nuevo usuario */
                 alert("Registrado con éxito");
                 nuevosdatosUsuario = {
-                    nombre: nuser,
+                    nombreUsuario: nuser,
+                    nombre: nname,
+                    apellido: nsurn,
                     email: nemail,
                     telefonos: [nphone],
                     direcciones: [{
                         default: true,
-                        tipo: "Predeterminado",
+                        tipo: selectedirtype,
                         departamento: ndep,
                         ciudad: ncity,
                         calle: ndir,
                         numero: nnum,
+                        indicaciones: infoad,
                     }],
                     contraseña: confpass,
                     selectedtheme: false,
