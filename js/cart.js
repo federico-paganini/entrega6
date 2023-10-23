@@ -107,4 +107,99 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 });
 
+//MODAL PARA SELECCIONAR FORMA DE PAGO
+let BotonModal=document.getElementById("BotonFormaPago")
 
+function DesplegarModal(){
+
+    let EspacioModal=document.createElement("div")
+    EspacioModal.className= 'modal fade';
+
+    EspacioModal.innerHTML= `
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title fs-4 fw-bold">Forma de pago</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Seleccione la forma de realizar el pago y complete los campos necesarios</p>
+
+    <hr class="my-3">
+
+        <form>
+        <div class="form-group">
+        <input type="radio" name="paymentMethod" id="TarjetaCredito" value="creditCard">
+        <label for="creditCard" class="fs-5 fw-medium mb-3">Tarjeta de crédito</label>
+        <input type="number" class="form-control mb-3" id="TarjetaNumero" placeholder="Número de tarjeta">
+        <input type="number" class="form-control mb-3" id="CodigoTarjeta" placeholder="Código de seguridad">
+        <input type="number" class="form-control mb-3" id="FechaVencimiento" placeholder="Vencimiento (MM/AA)">
+    </div>
+    
+    <hr class="my-3">
+
+    <div class="form-group">
+        <input type="radio" name="paymentMethod" id="TransferenciaBancaria" value="bankTransfer">
+        <label for="bankTransfer" class="fs-5 fw-medium mb-3">Transferencia bancaria</label>
+        <input type="text" class="form-control" id="NumeroCuenta" placeholder="Número de cuenta">
+    </div>
+        </form>
+
+        <hr class="my-3">
+    <button type="button" class="btn btn-primary" id="EnviarFormPago"> Aceptar
+    </button>
+
+    </div>
+    </div>
+</div>
+`;
+
+document.body.appendChild(EspacioModal);
+
+$(EspacioModal).modal('show');
+
+let PagoTarjeta=document.getElementById("TarjetaCredito")
+let TransferenciaBanco=document.getElementById("TransferenciaBancaria")
+
+if(PagoTarjeta && TransferenciaBanco){
+    PagoTarjeta.addEventListener("change", ()=>{
+        if(PagoTarjeta.checked){
+            document.getElementById("TarjetaNumero").disabled = false;
+            document.getElementById("CodigoTarjeta").disabled = false;
+            document.getElementById("FechaVencimiento").disabled = false;
+
+            document.getElementById("NumeroCuenta").disabled = true;
+        };
+    })
+    TransferenciaBanco.addEventListener("change", ()=>{
+                if(TransferenciaBanco.checked){
+                    document.getElementById("NumeroCuenta").disabled = false;
+
+                    document.getElementById("TarjetaNumero").disabled = true;
+                    document.getElementById("CodigoTarjeta").disabled = true;
+                    document.getElementById("FechaVencimiento").disabled = true;
+                };
+    })
+    }
+}
+
+BotonModal.addEventListener("click", DesplegarModal)
+
+let EnviarDatosPago=document.getElementById("EnviarFormPago")
+let MensajePago=document.getElementById("MensajePago")
+let PagoTarjeta=document.getElementById("TarjetaCredito")
+let TransferenciaBanco=document.getElementById("TransferenciaBancaria")
+
+EnviarDatosPago.addEventListener("click", (e)=>{
+    e.preventDefault();
+
+    if (PagoTarjeta.checked){
+        MensajePago.textContent="Se ha seleccionado TARJETA DE CRÉDITO como forma de pago"
+    } else if(TransferenciaBanco.checked){
+        MensajePago.textContent="Se ha seleccionado TRANSFERENCIA BANCARIA como forma de pago"
+    } else{
+        MensajePago.textContent="No se ha seleccionado una forma de pago"
+    }
+})
