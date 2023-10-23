@@ -107,20 +107,21 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 });
 
-//MODAL PARA SELECCIONAR FORMA DE PAGO
+//LINEAS DE CÓDIGO PARA CREAR EL MODAL PARA SELECCIONAR FORMA DE PAGO
+document.addEventListener("DOMContentLoaded",()=>{
+    
 let BotonModal=document.getElementById("BotonFormaPago")
+let EspacioModal=document.createElement("div")
+EspacioModal.className= 'modal fade';
 
-function DesplegarModal(){
-
-    let EspacioModal=document.createElement("div")
-    EspacioModal.className= 'modal fade';
+function DesplegarModal(){ //Función para crear y desplegar el modal que muestra las opciones de pago
 
     EspacioModal.innerHTML= `
 <div class="modal-dialog" role="document">
     <div class="modal-content">
     <div class="modal-header">
         <h5 class="modal-title fs-4 fw-bold">Forma de pago</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+        <button type="button" class="close" id="CerrarModal" data-dismiss="modal" aria-label="Cerrar">
         <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -129,23 +130,23 @@ function DesplegarModal(){
 
     <hr class="my-3">
 
-        <form>
+    <div id="ModalPago">
         <div class="form-group">
-        <input type="radio" name="paymentMethod" id="TarjetaCredito" value="creditCard">
-        <label for="creditCard" class="fs-5 fw-medium mb-3">Tarjeta de crédito</label>
-        <input type="number" class="form-control mb-3" id="TarjetaNumero" placeholder="Número de tarjeta">
-        <input type="number" class="form-control mb-3" id="CodigoTarjeta" placeholder="Código de seguridad">
-        <input type="number" class="form-control mb-3" id="FechaVencimiento" placeholder="Vencimiento (MM/AA)">
-    </div>
+            <input type="radio" name="paymentMethod" id="TarjetaCredito" required value="creditCard">
+            <label for="creditCard" class="fs-5 fw-medium mb-3">Tarjeta de crédito</label>
+            <input type="number" class="form-control mb-3" id="TarjetaNumero" minlength="18" required placeholder="Número de tarjeta">
+            <input type="number" class="form-control mb-3" id="CodigoTarjeta" minlength="3" required placeholder="Código de seguridad">
+            <input type="number" class="form-control mb-3" id="FechaVencimiento" minlength="4" required placeholder="Vencimiento (MM/AA)">
+        </div>
     
     <hr class="my-3">
 
-    <div class="form-group">
-        <input type="radio" name="paymentMethod" id="TransferenciaBancaria" value="bankTransfer">
-        <label for="bankTransfer" class="fs-5 fw-medium mb-3">Transferencia bancaria</label>
-        <input type="text" class="form-control" id="NumeroCuenta" placeholder="Número de cuenta">
+        <div class="form-group">
+            <input type="radio" name="paymentMethod" id="TransferenciaBancaria" minlength="12" required value="bankTransfer">
+            <label for="bankTransfer" class="fs-5 fw-medium mb-3">Transferencia bancaria</label>
+            <input type="text" class="form-control" id="NumeroCuenta" required placeholder="Número de cuenta">
+        </div>
     </div>
-        </form>
 
         <hr class="my-3">
     <button type="button" class="btn btn-primary" id="EnviarFormPago"> Aceptar
@@ -156,10 +157,19 @@ function DesplegarModal(){
 </div>
 `;
 
-document.body.appendChild(EspacioModal);
+document.body.appendChild(EspacioModal); //Incluir el modal dentro del body de la página web
 
 $(EspacioModal).modal('show');
 
+//Evento para el boton cerrar del modal
+let BotonCerrarModal = document.getElementById("CerrarModal");
+    BotonCerrarModal.addEventListener("click", CerrarModal);
+
+    function CerrarModal() {
+        $(EspacioModal).modal('hide');
+    }
+
+//Lineas de código que manejan que unas opciones de deshabilitan al seleccionar otras
 let PagoTarjeta=document.getElementById("TarjetaCredito")
 let TransferenciaBanco=document.getElementById("TransferenciaBancaria")
 
@@ -183,23 +193,40 @@ if(PagoTarjeta && TransferenciaBanco){
                 };
     })
     }
+
+//Función para envíar los datos del modal/formulario al hacer click en el bóton aceptar
+let BotonEnviarDatosPago=document.getElementById("EnviarFormPago")
+let MensajePago=document.getElementById("MensajePago")
+
+BotonEnviarDatosPago.addEventListener("click", ()=>{
+if(!PagoTarjeta.checked && !TransferenciaBanco.checked){
+    alert("Debe seleccionar un metodo de pago")
+    return
 }
 
-BotonModal.addEventListener("click", DesplegarModal)
-
-let EnviarDatosPago=document.getElementById("EnviarFormPago")
-let MensajePago=document.getElementById("MensajePago")
-let PagoTarjeta=document.getElementById("TarjetaCredito")
-let TransferenciaBanco=document.getElementById("TransferenciaBancaria")
-
-EnviarDatosPago.addEventListener("click", (e)=>{
-    e.preventDefault();
-
     if (PagoTarjeta.checked){
-        MensajePago.textContent="Se ha seleccionado TARJETA DE CRÉDITO como forma de pago"
+        if (
+            document.getElementById("TarjetaNumero").value === "" ||
+            document.getElementById("CodigoTarjeta").value === "" ||
+            document.getElementById("FechaVencimiento").value === ""
+        ) {
+            alert("Por favor complete todos los campos.");
+            return; 
+        }
+        MensajePago.innerHTML="Se ha seleccionado TARJETA DE CRÉDITO como forma de pago"
+
     } else if(TransferenciaBanco.checked){
-        MensajePago.textContent="Se ha seleccionado TRANSFERENCIA BANCARIA como forma de pago"
-    } else{
-        MensajePago.textContent="No se ha seleccionado una forma de pago"
-    }
+        if (document.getElementById("NumeroCuenta").value === ""){
+            alert("Por favor complete todos los campos.");
+            return; 
+        }
+
+        MensajePago.innerHTML="Se ha seleccionado TRANSFERENCIA BANCARIA como forma de pago"
+    } 
+
+    $(EspacioModal).modal('hide');
 })
+}
+
+BotonModal.addEventListener("click", DesplegarModal);
+});
