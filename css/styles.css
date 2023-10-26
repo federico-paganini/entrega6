@@ -391,6 +391,17 @@ a.custom-card:hover {
   font-weight: bold;
 }
 
+
+/* Estilo personalizado botón de pago */
+#BotonFormaPago{
+  background: linear-gradient(to right, #ff7010, #ff2b06);
+  font-weight: bold;
+}
+
+#BotonFormaPago:hover{
+  background:  #ff2c10;
+}
+
 /* Tarjeta de Dirección personalizada */
 
 .card-border {
