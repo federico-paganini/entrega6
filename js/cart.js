@@ -121,113 +121,152 @@ document.addEventListener('DOMContentLoaded', function () {
         agregarProducto(DatosProducto.nombre, DatosProducto.moneda, DatosProducto.imagen, DatosProducto.precio, DatosProducto.cantidad);
     });
 
+    
 
-
-
-    /* Añadir tarjeta con dirección de envío */
-
-    const adresscard = document.getElementById("sendAdress");
-    const adressuser = JSON.parse(localStorage.getItem("dbUsuario"));
-    const activeadress = (adressuser.direcciones).find(direccion => direccion.default == true);
-    let icon = selectIcon(activeadress.tipo);
-    let phone = adressuser.telefonos[0];
-
-    selectIcon((activeadress.tipo), icon);
-
-    adresscard.innerHTML += `
-        <h5 class="card-title">${icon} ${activeadress.calle} ${activeadress.numero}</h5>
-        <p class="card-text mb-2">${activeadress.ciudad} - ${activeadress.departamento}</p>
-    `
-
-    if (activeadress.indicaciones != "") {
-        adresscard.innerHTML += `
-        <p class="card-text mb-2">${activeadress.indicaciones}</p>
-        `
+    /* Cargar base de datos */
+    const baseDatos = JSON.parse(localStorage.getItem("Usuariosdb"));
+    let usuarioActivo;
+    const dataLocation = localStorage.getItem("dataLocation");
+    if (dataLocation) {
+        usuarioActivo = baseDatos.find(usuario => usuario.nombreUsuario === localStorage.getItem("UsuarioActivo"));
+    } else {
+        usuarioActivo = baseDatos.find(usuario => usuario.nombreUsuario === sessionStorage.getItem("UsuarioActivo"));
     }
 
-    adresscard.innerHTML += `
-        <p class="card-text mb-4"><small class="text-body-secondary">${adressuser.nombre} ${adressuser.apellido} - ${phone}</small></p>
-        <a class="btn btn-link btn-sm p-0 m-0" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Modificar dirección de envío / Contacto</a>
-    `
+    /* Añadir tarjeta con dirección de envío */
+    const adresscard = document.getElementById("sendAdress");
+    const contactinfo = document.getElementById("contactInfo");
+    const userdata = usuarioActivo;
+    const adressuser = userdata.direcciones;
+    let activeadress = (adressuser).find(direccion => direccion.default == true);
+    let phone = userdata.telefonos[0];
+
+    desplegarDirecciondeEnvio(adresscard, activeadress);
+    desplegarInfoComprador(contactinfo, userdata, phone);
 
 
-
-    /* Modificar datos de envío y contacto a través de modal */
-
+    /* Modificar datos de envío a través de modal */
     const moddir = document.getElementById("modifyadress");
-    const modcont = document.getElementById("modifycontact");
 
-    (adressuser.direcciones).forEach(direccion => {
-        let alldirs = document.createElement("button");
-        alldirs.classList.add("text-decoration-none");
-        alldirs.setAttribute("role", "button");
-        alldirs.setAttribute("onclick", "funcionprueba()")
-        alldirs.innerHTML += `
-            <div class="card mb-3 bg-body-tertiary" style="max-width: 500px;">
-                <div class="row g-0">
-                    <div class="col-1">
-                        <span class="rounded-start card-border"><span>
-                    </div>
-                    <div class="col-11">
-                        <div class="ms-3 card-body">
-                            <h5 class="card-title">${(selectIcon(direccion.tipo))} ${direccion.calle} ${direccion.numero}</h5>
-                            <p class="card-text">${direccion.ciudad} - ${direccion.departamento}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
+    /* Se despliega por primera vez con las opciones predeterminadas */
+    desplegarOpcionesEnvio(adressuser, activeadress, moddir, adresscard, contactinfo, userdata, phone);
 
-      
-        moddir.appendChild(alldirs);
+    /* Agregar nueva dirección de envío */
+    const formndir = document.getElementById("nuevoenvio");
 
-        moddir.innerHTML += `
-        <button class="btn btn-outline-secondary btn-sm" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal"><i class="bi bi-plus-square"></i> Agregar nueva dirección</button>
-    `;
+    formndir.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const ncity = document.getElementById("New-City").value;
+        const ndir = document.getElementById("New-Dir").value;
+        const ndep = document.getElementById("Departamento").value;
+        const nnum = document.getElementById("New-Num").value;
+        const infoad = document.getElementById("infoadd").value;
+        const typedom = document.getElementsByName("dirtype");
+        let selectedirtype;
+
+        for (const type of typedom) {
+            if (type.checked) {
+                selectedirtype = type.value;
+                break;
+            }
+        }
+
+        let ndeliver;
+
+        ndeliver = {
+            default: false,
+            tipo: selectedirtype,
+            departamento: ndep,
+            ciudad: ncity,
+            calle: ndir,
+            numero: nnum,
+            indicaciones: infoad,
+        };
+
+        (adressuser).push(ndeliver);
+        userdata.direcciones = adressuser;
+        localStorage.setItem('Usuariosdb', JSON.stringify(baseDatos));
+        desplegarOpcionesEnvio(adressuser, activeadress, moddir, adresscard, contactinfo, userdata, phone);
+        formndir.reset();
+        alert("Nueva dirección añadida");
+    })
 
 
+    /* Cambiar destinatario y teléfono de contacto */
 
-        /* Agregar nueva dirección de envío */
-        const formndir = document.getElementById("nuevoenvio");
-        console.log(adressuser);
+    const phonelist = document.getElementById("ncontact");
+    const addnumbers = document.getElementById("addnum");
 
-        formndir.addEventListener("submit", (e) => {
-            e.preventDefault();
+    mostrarTelefonos(userdata, phonelist);
 
-            const ncity = document.getElementById("New-City").value;
-            const ndir = document.getElementById("New-Dir").value;
-            const ndep = document.getElementById("Departamento").value;
-            const nnum = document.getElementById("New-Num").value;
-            const infoad = document.getElementById("infoadd").value;
-            const typedom = document.getElementsByName("dirtype");
-            let selectedirtype;
+    /* Añadir número de teléfono */
+    addnumbers.addEventListener("click", (e) => {
+        const nnumero = document.getElementById("nuevophone");
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        if (nnumero.value !== "") {
+            if (nnumero.value.length >= 8) {
+                let confirmar = (userdata.telefonos).includes(nnumero.value);
 
-            typedom.forEach(option => {
-                if (option.checked) {
-                    selectedirtype = option.value;
-                    return;
+                if (!confirmar) {
+                    userdata.telefonos.push(nnumero.value);
+                    localStorage.setItem('Usuariosdb', JSON.stringify(baseDatos));
+                    mostrarTelefonos(userdata, phonelist);
+                    nnumero.value = "";
+                    nnumero.placeholder = "Nuevo número";
+                    alert("Número de contacto agregado con éxito");
+                } else {
+                    alert("El número ingresado ya existe en sus opciones");
                 }
-            })
-            let ndeliver;
+            } else {
+                alert("El número ingresado es erróneo");
+            }
+        } else {
+            alert("Ingrese un nuevo número de contacto");
+        }
 
-            ndeliver = {
-                default: false,
-                tipo: selectedirtype,
-                departamento: ndep,
-                ciudad: ncity,
-                calle: ndir,
-                numero: nnum,
-                indicaciones: infoad,
+    })
+
+    /* Cambiar número de teléfono y/o destinatario*/
+
+    const btnsvtelodlv = document.getElementById("savedelivch");
+
+    btnsvtelodlv.addEventListener("click", (e) => {
+        e.preventDefault();
+        const contactinfo = document.getElementById("contactInfo");
+        const chphone = document.getElementById("ncontact");
+        const newdestiname = document.getElementById("New-Cname");
+        const newdestinsurn = document.getElementById("New-Csn");
+
+        if ((newdestiname.value !== "") && (newdestinsurn.value !== "")) {
+            let newdlvr = {
+                nombre: newdestiname.value,
+                apellido: newdestinsurn.value,
             };
-
-            (adressuser.direcciones).push(ndeliver);
-            alert("Nueva dirección añadida");
-            console.log(adressuser);
-        })
-    });
-
+            desplegarInfoComprador(contactinfo, newdlvr, chphone.value);
+            alert("Datos actualizados con éxito");
+        } else {
+            if (chphone.value === userdata.telefonos[0]) {
+                if (newdestiname.value === "") {
+                    alert("Por favor, ingrese el nombre del destinatario o cambie solamente el número de contacto");
+                } else {
+                    alert("Por favor, ingrese el apellido del destinatario o cambie solamente el número de contacto");
+                }
+            } else {
+                desplegarInfoComprador(contactinfo, userdata, chphone.value);
+                alert("Número de contacto actualizado con éxito");
+            }
+        }
+    })
 });
 
+
+
+
+
+
+/* Función para determinar el ícono de la tarjeta de envío*/
 function selectIcon(domicilio) {
     if (domicilio === "house") {
         return `<i class="bi bi-house-fill"></i>`;
@@ -242,6 +281,71 @@ function selectIcon(domicilio) {
     }
 };
 
-function funcionprueba() {
-    console.log("hola");
-} 
+/*Función para desplegar en modal las opciones de envío y se agrega función para cambiar la tarjeta principal */
+function desplegarOpcionesEnvio(direcciones, activa, desplegar, modifenvio, modifinfo, modifcompr, modifph) {
+    desplegar.innerHTML = "";
+    (direcciones).forEach(direccion => {
+        let alldirs = document.createElement("a");
+        alldirs.classList.add("text-decoration-none");
+        alldirs.setAttribute("role", "button");
+        alldirs.innerHTML += `
+            <div class="card mb-3 bg-body-tertiary nonclick" style="max-width: 500px;">
+                <div class="row g-0">
+                    <div class="col-1">
+                        <span class="rounded-start card-border"><span>
+                    </div>
+                    <div class="col-11">
+                        <div class="ms-3 card-body">
+                            <h5 class="card-title">${(selectIcon(direccion.tipo))} ${direccion.calle} ${direccion.numero}</h5>
+                            <p class="card-text">${direccion.ciudad} - ${direccion.departamento}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+
+        desplegar.appendChild(alldirs);
+
+        alldirs.addEventListener("click", () => {
+            activa = direccion;
+            desplegarDirecciondeEnvio(modifenvio, activa);
+            desplegarInfoComprador(modifinfo, modifcompr, modifph);
+            alert("Dirección de envío cambiada exitosamente");
+        });
+    })
+};
+
+/* Despliega la tarjeta principal */
+function desplegarDirecciondeEnvio(tarjenvio, direnvio) {
+    tarjenvio.innerHTML = "";
+    tarjenvio.innerHTML += `
+        <h5 class="card-title">${selectIcon(direnvio.tipo)} ${direnvio.calle} ${direnvio.numero}</h5>
+        <p class="card-text mb-2">${direnvio.ciudad} - ${direnvio.departamento}</p>
+    `;
+
+    if (direnvio.indicaciones != "") {
+        tarjenvio.innerHTML += `
+        <p class="card-text mb-2">${direnvio.indicaciones}</p>
+        `;
+    }
+};
+
+function desplegarInfoComprador(tarjinfo, infocomprador, telefono) {
+    tarjinfo.innerHTML = "";
+    tarjinfo.innerHTML += `
+    <p class="card-text mb-4"><small class="text-body-secondary">${infocomprador.nombre} ${infocomprador.apellido} - ${telefono}</small></p>
+`;
+}
+
+/* Función para desplegar teléfonos en las opciones del modal */
+function mostrarTelefonos(directorio, lista) {
+    lista.innerHTML = "";
+    lista.innerHTML += `
+            <option disabled>--Elige un número de contacto--</option>
+        `;
+
+    (directorio.telefonos).forEach(telefono => {
+        lista.innerHTML += `<option>${telefono}</option>`;
+    });
+};

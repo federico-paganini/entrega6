@@ -54,18 +54,18 @@ document.addEventListener("DOMContentLoaded", function () {
         ahora revisa si el usuario existe */
         let usuarioinlog;
         let existe = false;
-        
+
         if (Array.isArray(usuarios)) {
-            usuarios.forEach(usuario => {
+            for(const usuario of usuarios) {
                 if (usuario.nombreUsuario === user.value || usuario.email === user.value) {
                     existe = true;
                     usuarioinlog = usuario;
-                    return;
+                    break;
                 }
-            })
+            }
         }
 
-        
+
         /*Verifica si el usuario existe en la "base de datos": Si éste no existe, emite un mensaje para registarlo.
         Si el usuario existe, verifica los datos en la "base de datos" */
         if (existe) {
@@ -121,24 +121,24 @@ document.addEventListener("DOMContentLoaded", function () {
         const nsurn = document.getElementById("New-Surn").value;
         let selectedirtype;
 
-        typedom.forEach(option => {
-            if(option.checked) {
-                selectedirtype = option.value;
-                return;
+        for(const type of typedom) {
+            if (type.checked) {
+                selectedirtype = type.value;
+                break;
             }
-        })
+        }
 
         /*Verificación de datos para registro de nuevo usuario correcto */
 
         /* Verificación que el usuario a registrar no exista en la base de datos */
         let existe = false;
         if (Array.isArray(usuarios)) {
-            usuarios.forEach(usuario => {
-                if (usuario.nombreUsuario === nuser) {
+            for(const usuario of usuarios) {
+                if (usuario.nombreUsuario === nuser.value || usuario.email === nemail.value) {
                     existe = true;
-                    return;
+                    break;
                 }
-            })
+            }
         }
 
         if (existe) {

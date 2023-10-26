@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         usuarioActivo = baseDatos.find(usuario => usuario.nombreUsuario === sessionStorage.getItem("UsuarioActivo"));
     }
     
-    let email = localStorage.getItem("UsuarioActivo");
+    let email = usuarioActivo.nombreUsuario;
     let li_nav = document.getElementById("usuario");
 
     li_nav.classList.add("nav-item");

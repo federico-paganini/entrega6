@@ -18,6 +18,8 @@
 </head>
 
 <body>
+
+  <!--Navbar-->
   <nav class="navbar navbar-expand-lg bg-body-tertiary p-1">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -27,13 +29,13 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav w-100 justify-content-between mt-lg-0 mt-2">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">Inicio</a>
+            <a class="nav-link ms-lg-0 ms-2" href="index.html">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="categories.html">Categorías</a>
+            <a class="nav-link ms-lg-0 ms-2" href="categories.html">Categorías</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="sell.html">Vender</a>
+            <a class="nav-link ms-lg-0 ms-2" href="sell.html">Vender</a>
           </li>
           <li class="nav-item" id="usuario">
 
@@ -42,10 +44,13 @@
       </div>
     </div>
   </nav>
+
+  <!--Cuerpo del HTML-->
   <main>
     <div class="container">
       <h1 class="text-center mt-2 mb-5">Carrito de Compras</h1>
       <br><br>
+      <!--Tabla de productos ingresados al carrito-->
       <h3 class="mb-3 ms-2"><i class="bi bi-cart-check-fill"></i> Articulos a comprar:</h3>
       <div class="table-responsive">
         <table class="table table-hover align-middle table-striped text-center">
@@ -65,6 +70,7 @@
         </table>
       </div>
       <hr>
+      <!--Método de envío-->
       <div class="ms-2">
         <h3 class="mt-1"><i class="bi bi-filter-right"></i><i class="bi bi-truck"></i> Tipo de Envio</h3>
         <div id="checkboxenvio" class="form-check ms-3">
@@ -86,7 +92,7 @@
       <hr>
       <h3 class="ms-2 mb-3"><i class="bi bi-geo-alt-fill"></i> Direccion de Envio</h3>
 
-
+      <!--tarjeta con datos de envío y destinatario-->
       <div class="ms-sm-2">
         <div class="card mb-3 bg-body-tertiary" style="max-width: 500px;">
           <div class="row g-0">
@@ -94,14 +100,22 @@
               <span class="rounded-start card-border"><span>
             </div>
             <div class="col-11">
-              <div id="sendAdress" class="ms-3 card-body">
+              <div class="ms-3 card-body">
+                <!--Aquí se agrega direccion y datos de usuario-->
+                <div id="sendAdress">
 
+                </div>
+                <div id="contactInfo">
+
+                </div>
+                <a class="btn btn-link btn-sm p-0 m-0" data-bs-toggle="modal" href="#exampleModalToggle"
+                  role="button">Modificar dirección de envío / Contacto</a>
               </div>
             </div>
           </div>
         </div>
       </div>
-
+      <!--Primer modal para cambiar la dirección de envío-->
       <div class="modal fade" id="exampleModalToggle" aria-hidden="true" data-bs-backdrop="static"
         aria-labelledby="exampleModalToggleLabel" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -110,9 +124,14 @@
               <h5 class="modal-title" id="exampleModalToggleLabel">Modificar dirección</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div id="modifyadress" class="modal-body">
+            <div class="modal-body">
               <h6 class="mb-3">Seleccionar nueva dirección</h6>
+              <!--Aquí se ingresan las direcciones posibles de envío-->
+              <div id="modifyadress">
 
+              </div>
+              <button class="btn btn-outline-primary btn-sm" data-bs-target="#exampleModalToggle3"
+                data-bs-toggle="modal"><i class="bi bi-plus-square"></i> Agregar nueva dirección</button>
             </div>
             <div class="modal-footer">
               <button class="btn btn-outline-danger btn-sm" data-bs-target="#exampleModalToggle2"
@@ -121,6 +140,7 @@
           </div>
         </div>
       </div>
+      <!--Modal para modificar los datos de contacto (Usuario - destinatario)-->
       <div class="modal fade" id="exampleModalToggle2" data-bs-backdrop="static" aria-hidden="true"
         aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -129,11 +149,39 @@
               <h5 class="modal-title" id="exampleModalToggleLabel2">Modificar datos de contacto</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div id="modifycontact" class="modal-body">
+            <div class="modal-body">
+              <!--Aquí se ingresa o se modifica un número de contacto-->
+              <div>
+                <h6 class="text-center fw-bold">Cambiar número de contacto</h6>
+                <select class="form-select text-muted mb-3" name="ccel" id="ncontact">
 
+
+                </select>
+                <div class="row">
+                  <div class="col-auto">
+                    <button id="addnum" class="btn btn-outline-primary">Agregar número</button>
+                  </div>
+                  <div class="col-auto">
+                    <input type="tel" name="nwphone" id="nuevophone" minlength="8" class="form-control"
+                      placeholder="Nuevo número">
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <!--Aquí se cambia la persona que encarga - recibe el paquete-->
+              <h6 class="text-center fw-bold">Cambiar destinatario</h6>
+              <div class="row mb-3">
+                <div class="col-6">
+                  <input type="text" name="newcname" id="New-Cname" class="form-control" placeholder="Nombre">
+                </div>
+                <div class="col-6">
+                  <input type="text" name="newcsurn" id="New-Csn" class="form-control" placeholder="Apellido">
+                </div>
+              </div>
+              <button class="btn btn-warning btn-sm" id="savedelivch">Guardar</button>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-outline-danger" data-bs-target="#exampleModalToggle"
+              <button class="btn btn-outline-danger btn-sm" data-bs-target="#exampleModalToggle"
                 data-bs-toggle="modal">Modificar dirección</button>
             </div>
           </div>
@@ -212,11 +260,11 @@
                 </div>
                 <input type="text" name="infoadd" id="infoadd" class="form-control mb-3"
                   placeholder="Otras indicaciones (Opcional)" maxlength="300">
-                <button type="submit" class="btn btn-danger">Guardar</button>
+                <button type="submit" class="btn btn-warning btn-sm">Guardar</button>
               </form>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-secondary" data-bs-target="#exampleModalToggle"
+              <button class="btn btn-secondary btn-sm" data-bs-target="#exampleModalToggle"
                 data-bs-toggle="modal">Volver</button>
             </div>
           </div>
