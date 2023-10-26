@@ -96,12 +96,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     infoProducto.push(DatosProducto);
                     localStorage.setItem("infoProducto", JSON.stringify(infoProducto));
                     infoProducto.forEach((DatosProducto) => {
-                        console.log(DatosProducto);
                         agregarProducto(DatosProducto.nombre, DatosProducto.moneda, DatosProducto.imagen, DatosProducto.precio, DatosProducto.cantidad);
                     });
                 } else {
                     infoProducto.forEach((DatosProducto) => {
-                        console.log(DatosProducto);
                         agregarProducto(DatosProducto.nombre, DatosProducto.moneda, DatosProducto.imagen, DatosProducto.precio, DatosProducto.cantidad);
                     });
                 }
@@ -111,11 +109,6 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => {
             console.error("La solicitud no se completó correctamente", error);
         });
-
-
-    function agregarProductoFecheado(producto) {
-        agregarProducto(producto.name, producto.currency, producto.image, producto.unitCost, producto.count);
-    }
 
 
     function agregarProducto(nombre, moneda, imagen, costoUnitario, cantidad) {
@@ -280,21 +273,20 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 //LINEAS DE CÓDIGO PARA CREAR EL MODAL PARA SELECCIONAR FORMA DE PAGO
-document.addEventListener("DOMContentLoaded",()=>{
-    
-let BotonModal=document.getElementById("BotonFormaPago")
-let EspacioModal=document.createElement("div")
-EspacioModal.className= 'modal fade';
+document.addEventListener("DOMContentLoaded", () => {
 
-function DesplegarModal(){ //Función para crear y desplegar el modal que muestra las opciones de pago
+    let BotonModal = document.getElementById("BotonFormaPago")
+    let EspacioModal = document.createElement("div")
+    EspacioModal.className = 'modal fade';
 
-    EspacioModal.innerHTML= `
+    function DesplegarModal() { //Función para crear y desplegar el modal que muestra las opciones de pago
+
+        EspacioModal.innerHTML = `
 <div class="modal-dialog" role="document">
     <div class="modal-content">
     <div class="modal-header">
         <h5 class="modal-title fs-4 fw-bold">Forma de pago</h5>
-        <button type="button" class="close" id="CerrarModal" data-dismiss="modal" aria-label="Cerrar">
-        <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn-close" id="CerrarModal" data-dismiss="modal" aria-label="Cerrar">
         </button>
     </div>
     <div class="modal-body">
@@ -329,79 +321,79 @@ function DesplegarModal(){ //Función para crear y desplegar el modal que muestr
 </div>
 `;
 
-document.body.appendChild(EspacioModal); //Incluir el modal dentro del body de la página web
+        document.body.appendChild(EspacioModal); //Incluir el modal dentro del body de la página web
 
-$(EspacioModal).modal('show');
+        $(EspacioModal).modal('show');
 
-//Evento para el boton cerrar del modal
-let BotonCerrarModal = document.getElementById("CerrarModal");
-    BotonCerrarModal.addEventListener("click", CerrarModal);
+        //Evento para el boton cerrar del modal
+        let BotonCerrarModal = document.getElementById("CerrarModal");
+        BotonCerrarModal.addEventListener("click", CerrarModal);
 
-    function CerrarModal() {
-        $(EspacioModal).modal('hide');
-    }
+        function CerrarModal() {
+            $(EspacioModal).modal('hide');
+        }
 
-//Lineas de código que manejan que unas opciones de deshabilitan al seleccionar otras
-let PagoTarjeta=document.getElementById("TarjetaCredito")
-let TransferenciaBanco=document.getElementById("TransferenciaBancaria")
+        //Lineas de código que manejan que unas opciones de deshabilitan al seleccionar otras
+        let PagoTarjeta = document.getElementById("TarjetaCredito")
+        let TransferenciaBanco = document.getElementById("TransferenciaBancaria")
 
-if(PagoTarjeta && TransferenciaBanco){
-    PagoTarjeta.addEventListener("change", ()=>{
-        if(PagoTarjeta.checked){
-            document.getElementById("TarjetaNumero").disabled = false;
-            document.getElementById("CodigoTarjeta").disabled = false;
-            document.getElementById("FechaVencimiento").disabled = false;
+        if (PagoTarjeta && TransferenciaBanco) {
+            PagoTarjeta.addEventListener("change", () => {
+                if (PagoTarjeta.checked) {
+                    document.getElementById("TarjetaNumero").disabled = false;
+                    document.getElementById("CodigoTarjeta").disabled = false;
+                    document.getElementById("FechaVencimiento").disabled = false;
 
-            document.getElementById("NumeroCuenta").disabled = true;
-        };
-    })
-    TransferenciaBanco.addEventListener("change", ()=>{
-                if(TransferenciaBanco.checked){
+                    document.getElementById("NumeroCuenta").disabled = true;
+                };
+            })
+            TransferenciaBanco.addEventListener("change", () => {
+                if (TransferenciaBanco.checked) {
                     document.getElementById("NumeroCuenta").disabled = false;
 
                     document.getElementById("TarjetaNumero").disabled = true;
                     document.getElementById("CodigoTarjeta").disabled = true;
                     document.getElementById("FechaVencimiento").disabled = true;
                 };
-    })
+            })
+        }
+
+        //Función para envíar los datos del modal/formulario al hacer click en el bóton aceptar
+        let BotonEnviarDatosPago = document.getElementById("EnviarFormPago")
+        let MensajePago = document.getElementById("MensajePago")
+
+        BotonEnviarDatosPago.addEventListener("click", () => {
+            if (!PagoTarjeta.checked && !TransferenciaBanco.checked) {
+                alert("Debe seleccionar un metodo de pago")
+                return
+            }
+
+            if (PagoTarjeta.checked) {
+                if (
+                    document.getElementById("TarjetaNumero").value === "" ||
+                    document.getElementById("CodigoTarjeta").value === "" ||
+                    document.getElementById("FechaVencimiento").value === ""
+                ) {
+                    alert("Por favor complete todos los campos.");
+                    return;
+                }
+                MensajePago.innerHTML = "Se ha seleccionado TARJETA DE CRÉDITO como forma de pago"
+
+            } else if (TransferenciaBanco.checked) {
+                if (document.getElementById("NumeroCuenta").value === "") {
+                    alert("Por favor complete todos los campos.");
+                    return;
+                }
+
+                MensajePago.innerHTML = "Se ha seleccionado TRANSFERENCIA BANCARIA como forma de pago"
+            }
+
+            $(EspacioModal).modal('hide');
+        })
     }
 
-//Función para envíar los datos del modal/formulario al hacer click en el bóton aceptar
-let BotonEnviarDatosPago=document.getElementById("EnviarFormPago")
-let MensajePago=document.getElementById("MensajePago")
 
-BotonEnviarDatosPago.addEventListener("click", ()=>{
-if(!PagoTarjeta.checked && !TransferenciaBanco.checked){
-    alert("Debe seleccionar un metodo de pago")
-    return
-}
-
-    if (PagoTarjeta.checked){
-        if (
-            document.getElementById("TarjetaNumero").value === "" ||
-            document.getElementById("CodigoTarjeta").value === "" ||
-            document.getElementById("FechaVencimiento").value === ""
-        ) {
-            alert("Por favor complete todos los campos.");
-            return; 
-        }
-        MensajePago.innerHTML="Se ha seleccionado TARJETA DE CRÉDITO como forma de pago"
-
-    } else if(TransferenciaBanco.checked){
-        if (document.getElementById("NumeroCuenta").value === ""){
-            alert("Por favor complete todos los campos.");
-            return; 
-        }
-
-        MensajePago.innerHTML="Se ha seleccionado TRANSFERENCIA BANCARIA como forma de pago"
-    } 
-
-    $(EspacioModal).modal('hide');
-})
-}
-
-
-BotonModal.addEventListener("click", DesplegarModal);
+    BotonModal.addEventListener("click", DesplegarModal);
 });
 
 
@@ -492,3 +484,10 @@ function mostrarTelefonos(directorio, lista) {
     });
 };
 
+function actualizarCostoFinal() {
+    const carrito = localStorage.getItem("infoProducto");
+    let subtotalCarrito = 0;
+    carrito.forEach(producto => {
+        subtotalCarrito += subTotal(producto.precio, producto.cantidad);
+    })
+}
