@@ -390,3 +390,16 @@ a.custom-card:hover {
 .negrita {
   font-weight: bold;
 }
+
+/* Tarjeta de Dirección personalizada */
+
+.card-border {
+  background: linear-gradient(to right, #ff7010, #ff2b06);
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.nonclick {
+  pointer-events: none;
+}

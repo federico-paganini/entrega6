@@ -32,7 +32,7 @@
             </div>
           </div>
           <!--Formulario de Inicio de Sesión-->
-          <form method="post" id="form-log" class="form-activo">
+          <form id="form-log" class="form-activo">
             <h3 class="text-center mt-4">¡Bienvenido!</h3>
             <p class="text-center mb-4">Ingresa tus datos en los siguientes campos para poder acceder a tu
               cuenta</p>
@@ -67,15 +67,28 @@
                 required>
             </div>
             <div class="form-group mb-3">
+              <div class="row">
+                <div class="col-12 col-sm-6 mb-3 mb-sm-0">
+                  <input type="text" name="nuevonombre" id="New-Name" class="form-control" placeholder="Nombre"
+                    required>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <input type="text" name="nuevoapellido" id="New-Surn" class="form-control" placeholder="Apellido"
+                    required>
+                </div>
+              </div>
+            </div>
+            <div class="form-group mb-3">
               <input type="email" name="nuevoemail" class="form-control" id="New-Mail" placeholder="Email" required>
             </div>
             <div class="form-group mb-3">
-              <input type="tel" minlength="9" class="form-control" placeholder="Celular" required>
+              <input type="tel" minlength="9" class="form-control" id="New-Phone" placeholder="Celular" required>
             </div>
+            <hr>
             <div>
-              <select class="form-select text-muted mb-3" name="dep" id="Departamento" required>
-                <option selected>Departamento</option>
-                <option>--Elige un Departamento--</option>
+              <select class="form-select text-muted mb-3" name="dep" id="Departamento">
+                <option hidden selected>Departamento</option>
+                <option disabled>--Elige un Departamento--</option>
                 <option value="Artigas">Artigas</option>
                 <option value="Canelones">Canelones</option>
                 <option value="CerroLargo">Cerro Largo</option>
@@ -98,11 +111,43 @@
               </select>
             </div>
             <div class="form-group mb-3">
-              <input type="text" name="newcity" class="form-control" placeholder="Ciudad" required>
+              <input type="text" name="newcity" id="New-City" class="form-control" placeholder="Ciudad" required>
             </div>
-            <div class="form-group mb-3">
-              <input type="text" name="newdir" class="form-control" placeholder="Direccion" required>
+            <div class="row mb-3">
+              <div class="col-8">
+                <input type="text" name="newdir" id="New-Dir" class="form-control" placeholder="Calle" required>
+              </div>
+              <div class="col-4">
+                <input type="number" name="newnum" id="New-Num" class="form-control" placeholder="Num." required>
+              </div>
             </div>
+
+            <div class="form-check mb-3 pe-4">
+              <div class="row justify-content-sm-between justify-content-center d-flex">
+                <div class="col-auto col-sm-auto justify-content-sm-start justify-content-end d-flex mt-2 mt-sm-0">
+                  <label class="me-2 me-md-0">
+                    <input type="radio" name="dirtype" value="house" required>
+                    <span>Casa</span>
+                  </label>
+                </div>
+                <div
+                  class="col-auto col-sm-4 col-md-auto justify-content-sm-center justify-content-start d-flex mt-2 mt-sm-0">
+                  <label>
+                    <input type="radio" name="dirtype" value="building">
+                    <span>Edicificio</span>
+                  </label>
+                </div>
+                <div class="col-12 col-sm-auto justify-content-sm-end justify-content-center d-flex mt-2 mt-sm-0">
+                  <label>
+                    <input type="radio" name="dirtype" value="work">
+                    <span>Trabajo</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <input type="text" name="infoadd" id="infoadd" class="form-control"
+              placeholder="Otras indicaciones (Opcional)" maxlength="300">
+            <hr>
             <div class="form-group mb-3">
               <input type="password" name="newpass" class="form-control" id="newpass" minlength="6"
                 placeholder="Contraseña" required>

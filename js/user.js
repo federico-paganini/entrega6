@@ -1,9 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
-    if (!localStorage.getItem("isLoggedIn")) {
+    if (localStorage.getItem('isLoggedIn') || sessionStorage.getItem('isLoggedIn'))  {
+        
+    } else {
         const usuario = document.getElementById("usuario");
         usuario.remove();
     }
-    let email = localStorage.getItem("email");
+    const baseDatos = JSON.parse(localStorage.getItem("Usuariosdb"));
+    let usuarioActivo;
+    const dataLocation = localStorage.getItem("dataLocation");
+    /* Verificar si los datos están en session storage o local storage y traer los datos de usuario:
+    Tema seleccionado, carrito, etc. */
+    if (dataLocation) {
+        usuarioActivo = baseDatos.find(usuario => usuario.nombreUsuario === localStorage.getItem("UsuarioActivo"));
+    } else {
+        usuarioActivo = baseDatos.find(usuario => usuario.nombreUsuario === sessionStorage.getItem("UsuarioActivo"));
+    }
+    
+    let email = usuarioActivo.nombreUsuario;
     let li_nav = document.getElementById("usuario");
 
     li_nav.classList.add("nav-item");
@@ -81,22 +94,30 @@ document.addEventListener("DOMContentLoaded", function () {
             li_nav.classList.add("userclicked");
         }
     })
-    
-//Se borran los datos del carrito almacenados en localStorage al cerrar sesión
-    function CerrarSesion(){
-        localStorage.removeItem("carrito")
-        localStorage.removeItem("infoProducto")
-        window.location.href="login.html"
+
+    //Se borran los datos del carrito almacenados en localStorage al cerrar sesión
+    function CerrarSesion() {
+        if(dataLocation) {
+            usuarioActivo.carrito = JSON.parse(localStorage.getItem("infoProducto"));
+            localStorage.clear();
+            localStorage.setItem('Usuariosdb', JSON.stringify(baseDatos));
+        } else {
+            usuarioActivo.carrito = JSON.parse(localStorage.getItem("infoProducto"));
+            localStorage.clear();
+            sessionStorage.clear();
+            localStorage.setItem('Usuariosdb', JSON.stringify(baseDatos));
+        }
+        window.location.href = "login.html"
     };
 
-    const BotonCerrarSesion=document.getElementById("CerrarSesion");
+    const BotonCerrarSesion = document.getElementById("CerrarSesion");
 
-        if (BotonCerrarSesion) {
-            BotonCerrarSesion.addEventListener("click", (e) => {
-                e.preventDefault();
-                CerrarSesion();
-            });
-        };
+    if (BotonCerrarSesion) {
+        BotonCerrarSesion.addEventListener("click", (e) => {
+            e.preventDefault();
+            CerrarSesion();
+        });
+    };
 
     //Eventos para cambiar el tema de claro a osuro. Algunos elementos no se cambiaban con activar el switch
     //ya que son personalizados, por lo que se trataron de forma específica
@@ -107,11 +128,15 @@ document.addEventListener("DOMContentLoaded", function () {
     ligthdarkswitch.addEventListener("click", (event) => {
         event.stopPropagation();
         if (ligthdarkswitch.checked) {
-            localStorage.setItem("darktheme", true);
+            usuarioActivo.selectedtheme = true;
+            localStorage.setItem('Usuariosdb', JSON.stringify(baseDatos));
+            localStorage.setItem("darktheme", usuarioActivo.selectedtheme);
             document.documentElement.setAttribute("data-bs-theme", "dark");
             usermenubox.classList.add("back-dkmode");
         } else {
-            localStorage.setItem("darktheme", false);
+            usuarioActivo.selectedtheme = false;
+            localStorage.setItem('Usuariosdb', JSON.stringify(baseDatos));
+            localStorage.setItem("darktheme", usuarioActivo.selectedtheme);
             document.documentElement.setAttribute("data-bs-theme", "light");
             usermenubox.classList.remove("back-dkmode");
         }
