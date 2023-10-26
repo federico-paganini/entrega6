@@ -80,9 +80,32 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(cartData => {
 
             cartData.articles.forEach(product => {
-                agregarProductoFecheado(product);
-                let ncosto = product.count * product.unitCost;
-                nsubtotal.innerHTML = `USD ${ncosto}`;
+                const infoProducto = JSON.parse(localStorage.getItem('infoProducto')) || [];
+                if (!localStorage.getItem("preaddProd")) {
+                    localStorage.setItem("preaddProd", true);
+                    console.log(product);
+
+                    const DatosProducto = {
+                        id: product.id,
+                        nombre: product.name,
+                        moneda: product.currency,
+                        precio: product.unitCost,
+                        imagen: product.image,
+                        cantidad: 1,
+                    };
+                    infoProducto.push(DatosProducto);
+                    localStorage.setItem("infoProducto", JSON.stringify(infoProducto));
+                    infoProducto.forEach((DatosProducto) => {
+                        console.log(DatosProducto);
+                        agregarProducto(DatosProducto.nombre, DatosProducto.moneda, DatosProducto.imagen, DatosProducto.precio, DatosProducto.cantidad);
+                    });
+                } else {
+                    infoProducto.forEach((DatosProducto) => {
+                        console.log(DatosProducto);
+                        agregarProducto(DatosProducto.nombre, DatosProducto.moneda, DatosProducto.imagen, DatosProducto.precio, DatosProducto.cantidad);
+                    });
+                }
+
             });
         })
         .catch(error => {
@@ -116,12 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
-    const infoProducto = JSON.parse(localStorage.getItem('infoProducto')) || [];
-    infoProducto.forEach((DatosProducto) => {
-        agregarProducto(DatosProducto.nombre, DatosProducto.moneda, DatosProducto.imagen, DatosProducto.precio, DatosProducto.cantidad);
-    });
 
-    
 
     /* Cargar base de datos */
     const baseDatos = JSON.parse(localStorage.getItem("Usuariosdb"));
