@@ -22,6 +22,8 @@ function actualizarSubtotal(cantIngresada, costoUnitario) {
   actualizarCostoFinal();
 }
 
+let seleccionoForma = false;
+
 function subTotal(costoUnitario, cantidad) {
   return costoUnitario * cantidad;
 }
@@ -98,6 +100,9 @@ document.addEventListener("DOMContentLoaded", function () {
         opcion.addEventListener("change", actualizarCostoFinal);
       });
       actualizarCostoFinal();
+
+      console.log(document.getElementById("verificar"));
+      document.getElementById("verificar").onclick = verificarDatos;
     })
     .catch((error) => {
       console.error("La solicitud no se completó correctamente", error);
@@ -118,8 +123,6 @@ document.addEventListener("DOMContentLoaded", function () {
         usuario.nombreUsuario === sessionStorage.getItem("UsuarioActivo")
     );
   }
-
-  document.getElementById("submit").addEventListener("click",verificarDatos());
 
   /* Añadir tarjeta con dirección de envío */
   const adresscard = document.getElementById("sendAdress");
@@ -359,6 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
     BotonEnviarDatosPago.addEventListener("click", () => {
       if (!PagoTarjeta.checked && !TransferenciaBanco.checked) {
         alert("Debe seleccionar un metodo de pago");
+        seleccionoForma = false;
         return;
       }
 
@@ -369,18 +373,22 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("FechaVencimiento").value === ""
         ) {
           alert("Por favor complete todos los campos.");
+          seleccionoForma = false;
           return;
         }
         MensajePago.innerHTML =
           "Se ha seleccionado TARJETA DE CRÉDITO como forma de pago";
+        seleccionoForma = true;
       } else if (TransferenciaBanco.checked) {
         if (document.getElementById("NumeroCuenta").value === "") {
           alert("Por favor complete todos los campos.");
+          seleccionoForma = false;
           return;
         }
 
         MensajePago.innerHTML =
           "Se ha seleccionado TRANSFERENCIA BANCARIA como forma de pago";
+        seleccionoForma = true;
       }
 
       $(EspacioModal).modal("hide");
@@ -503,6 +511,7 @@ function actualizarCostoFinal() {
   let costoEnvio = 0;
   let ponercostoenvio = document.getElementById("costoEnvio");
   let totalFinal = document.getElementById("totalFinal");
+
   var opciones = document.getElementsByName("opcionCompra");
 
   let opcionSeleccionada;
@@ -536,15 +545,43 @@ function actualizarCostoFinal() {
   Subtotal.textContent = `${subtotalCarrito.toFixed(2)}`;
 }
 
-function verificarDatos(){
+function verificarDatos() {
+  console.log("Verificando");
+  let esValido = true;
 
-    console.log("Verificando");
-    if(false){
-        
+  var opciones = document.getElementsByName("opcionCompra");
+
+  let opcionSeleccionada;
+
+  for (var i = 0; i < opciones.length; i++) {
+    for (var j = 0; j < opciones.length; j++) {
+      if (opciones[j].checked) {
+        opcionSeleccionada = opciones[j].value;
+        break;
+      }
     }
-    else{
-        let alerta = document.getElementById("alert");
-        alerta.hidden = false;
-        setTimeout(() => { window.location.href = "index.html"; }, 3000);
-    }
+    console.log("esta es la opcion seleccionada" + opcionSeleccionada);
+  }
+  if (
+    opcionSeleccionada !== 1 ||
+    opcionSeleccionada !== 2 ||
+    opcionSeleccionada !== 3
+  ) {
+    esValido = false;
+  }
+
+  console.log("Seleecionforma :", seleccionoForma);
+  if (!esValido && !seleccionoForma) {
+    let alerta = document.getElementById("badalert");
+    alerta.hidden = false;
+    setTimeout(() => {
+      alerta.hidden = true;
+    }, 3000);
+  } else {
+    let alerta = document.getElementById("alert");
+    alerta.hidden = false;
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 3000);
+  }
 }
