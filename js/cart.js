@@ -41,23 +41,26 @@ function agregarProducto(nombre, moneda, imagen, costoUnitario, cantidad) {
                         <input type="number" class="form-control small-input-carrito" value=${cantidad} min="1" onchange="actualizarSubtotal(this, ${costoUnitario})">
                     </div>
                 </td>
-                <td class="negrita" id="impResult">${moneda + " " + resultado}</td>
+                <td class="negrita" id="impResult">${
+                  moneda + " " + resultado
+                }</td>
                 <td>
                     <button class="btn btn-danger eliminar-producto" onclick="eliminarProducto(this)"><i class="bi bi-trash3-fill"></i></button>
                 </td>
             </tr>`;
 }
 
-
-/* Eliminar producto */ 
+/* Eliminar producto */
 function eliminarProducto(botonEliminar) {
   const fila = botonEliminar.closest("tr");
   fila.remove();
 
-/* Eliminar del Local Storage */
+  /* Eliminar del Local Storage */
   const infoProducto = JSON.parse(localStorage.getItem("infoProducto")) || [];
   const nombreProducto = fila.querySelector("td:nth-child(2)").textContent;
-  const index = infoProducto.findIndex((item) => item.nombre === nombreProducto);
+  const index = infoProducto.findIndex(
+    (item) => item.nombre === nombreProducto
+  );
 
   if (index !== -1) {
     infoProducto.splice(index, 1);
@@ -65,7 +68,6 @@ function eliminarProducto(botonEliminar) {
   }
   actualizarCostoFinal();
 }
-
 
 document.addEventListener("DOMContentLoaded", function () {
   const productosCarrito = document.getElementById("productosCarrito");
@@ -454,10 +456,11 @@ function desplegarOpcionesEnvio(
                     <div class="col-11">
                         <div class="ms-3 card-body">
                             <h5 class="card-title">${selectIcon(
-      direccion.tipo
-    )} ${direccion.calle} ${direccion.numero}</h5>
-                            <p class="card-text">${direccion.ciudad} - ${direccion.departamento
-      }</p>
+                              direccion.tipo
+                            )} ${direccion.calle} ${direccion.numero}</h5>
+                            <p class="card-text">${direccion.ciudad} - ${
+      direccion.departamento
+    }</p>
                         </div>
                     </div>
                 </div>
@@ -479,10 +482,12 @@ function desplegarOpcionesEnvio(
 function desplegarDirecciondeEnvio(tarjenvio, direnvio) {
   tarjenvio.innerHTML = "";
   tarjenvio.innerHTML += `
-        <h5 class="card-title">${selectIcon(direnvio.tipo)} ${direnvio.calle} ${direnvio.numero
-    }</h5>
-        <p class="card-text mb-2">${direnvio.ciudad} - ${direnvio.departamento
-    }</p>
+        <h5 class="card-title">${selectIcon(direnvio.tipo)} ${direnvio.calle} ${
+    direnvio.numero
+  }</h5>
+        <p class="card-text mb-2">${direnvio.ciudad} - ${
+    direnvio.departamento
+  }</p>
     `;
 
   if (direnvio.indicaciones != "") {
@@ -560,12 +565,11 @@ function actualizarCostoFinal() {
 }
 
 function verificarDatos() {
-  console.log("Verificando");
-  let esValido = true;
+  let esValido = false;
 
   var opciones = document.getElementsByName("opcionCompra");
 
-  let opcionSeleccionada;
+  let opcionSeleccionada = 0;
 
   for (var i = 0; i < opciones.length; i++) {
     for (var j = 0; j < opciones.length; j++) {
@@ -574,20 +578,36 @@ function verificarDatos() {
         break;
       }
     }
-    console.log("esta es la opcion seleccionada" + opcionSeleccionada);
+    console.log("esta es la opcion seleccionada " + opcionSeleccionada);
   }
-  if (
-    opcionSeleccionada !== 1 ||
-    opcionSeleccionada !== 2 ||
-    opcionSeleccionada !== 3
-  ) {
-    esValido = false;
+  console.log(opcionSeleccionada);
+  if (opcionSeleccionada == 1 || opcionSeleccionada == 2 || opcionSeleccionada == 3  )
+  {
+      console.log("wwwww");
+    esValido = true;
   }
 
-  console.log("Seleecionforma :", seleccionoForma);
-  if (!esValido && !seleccionoForma) {
+  const carrito = JSON.parse(localStorage.getItem("infoProducto"));
+  let productoEnCarrito = carrito.length;
+
+  if (esValido === false) {
+    let alerta = document.getElementById("badalert");
+    alerta.innerHTML = "Seleccione un tipo de envio.";
+    alerta.hidden = false;
+    setTimeout(() => {
+      alerta.hidden = true;
+    }, 3000);
+  } else if (!seleccionoForma) {
     let alerta = document.getElementById("badalert");
     alerta.hidden = false;
+    alerta.innerHTML = "Seleccione una forma de pago.";
+    setTimeout(() => {
+      alerta.hidden = true;
+    }, 3000);
+  } else if (productoEnCarrito < 1) {
+    let alerta = document.getElementById("badalert");
+    alerta.hidden = false;
+    alerta.innerHTML = "No hay prdocutos en el carrito";
     setTimeout(() => {
       alerta.hidden = true;
     }, 3000);
