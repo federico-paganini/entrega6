@@ -41,14 +41,31 @@ function agregarProducto(nombre, moneda, imagen, costoUnitario, cantidad) {
                         <input type="number" class="form-control small-input-carrito" value=${cantidad} min="1" onchange="actualizarSubtotal(this, ${costoUnitario})">
                     </div>
                 </td>
-                <td class="negrita" id="impResult">${
-                  moneda + " " + resultado
-                }</td>
+                <td class="negrita" id="impResult">${moneda + " " + resultado}</td>
                 <td>
-                    <button class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button>
+                    <button class="btn btn-danger eliminar-producto" onclick="eliminarProducto(this)"><i class="bi bi-trash3-fill"></i></button>
                 </td>
             </tr>`;
 }
+
+
+/* Eliminar producto */ 
+function eliminarProducto(botonEliminar) {
+  const fila = botonEliminar.closest("tr");
+  fila.remove();
+
+/* Eliminar del Local Storage */
+  const infoProducto = JSON.parse(localStorage.getItem("infoProducto")) || [];
+  const nombreProducto = fila.querySelector("td:nth-child(2)").textContent;
+  const index = infoProducto.findIndex((item) => item.nombre === nombreProducto);
+
+  if (index !== -1) {
+    infoProducto.splice(index, 1);
+    localStorage.setItem("infoProducto", JSON.stringify(infoProducto));
+  }
+  actualizarCostoFinal();
+}
+
 
 document.addEventListener("DOMContentLoaded", function () {
   const productosCarrito = document.getElementById("productosCarrito");
@@ -437,11 +454,10 @@ function desplegarOpcionesEnvio(
                     <div class="col-11">
                         <div class="ms-3 card-body">
                             <h5 class="card-title">${selectIcon(
-                              direccion.tipo
-                            )} ${direccion.calle} ${direccion.numero}</h5>
-                            <p class="card-text">${direccion.ciudad} - ${
-      direccion.departamento
-    }</p>
+      direccion.tipo
+    )} ${direccion.calle} ${direccion.numero}</h5>
+                            <p class="card-text">${direccion.ciudad} - ${direccion.departamento
+      }</p>
                         </div>
                     </div>
                 </div>
@@ -463,12 +479,10 @@ function desplegarOpcionesEnvio(
 function desplegarDirecciondeEnvio(tarjenvio, direnvio) {
   tarjenvio.innerHTML = "";
   tarjenvio.innerHTML += `
-        <h5 class="card-title">${selectIcon(direnvio.tipo)} ${direnvio.calle} ${
-    direnvio.numero
-  }</h5>
-        <p class="card-text mb-2">${direnvio.ciudad} - ${
-    direnvio.departamento
-  }</p>
+        <h5 class="card-title">${selectIcon(direnvio.tipo)} ${direnvio.calle} ${direnvio.numero
+    }</h5>
+        <p class="card-text mb-2">${direnvio.ciudad} - ${direnvio.departamento
+    }</p>
     `;
 
   if (direnvio.indicaciones != "") {
