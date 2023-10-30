@@ -1,5 +1,12 @@
 function actualizarSubtotal(cantIngresada, costoUnitario) {
-  const cantidad = cantIngresada.value;
+  let cantidad = cantIngresada.value;
+
+  if (cantidad <1)
+  {
+    console.log("entro");
+    cantIngresada.value = 1;
+    cantidad = 1;
+  }
   const impResult =
     cantIngresada.parentElement.parentElement.nextElementSibling;
   const moneda = impResult.innerText.split(" ")[0];
