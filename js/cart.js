@@ -86,40 +86,39 @@ document.addEventListener("DOMContentLoaded", function () {
       cartData.articles.forEach((product) => {
         const infoProducto =
           JSON.parse(localStorage.getItem("infoProducto")) || [];
-        if (!localStorage.getItem("preaddProd")) {
-          localStorage.setItem("preaddProd", true);
-          console.log(product);
-
-          const DatosProducto = {
-            id: product.id,
-            nombre: product.name,
-            moneda: product.currency,
-            precio: product.unitCost,
-            imagen: product.image,
-            cantidad: 1,
-          };
-          infoProducto.push(DatosProducto);
-          localStorage.setItem("infoProducto", JSON.stringify(infoProducto));
-          infoProducto.forEach((DatosProducto) => {
-            agregarProducto(
-              DatosProducto.nombre,
-              DatosProducto.moneda,
-              DatosProducto.imagen,
-              DatosProducto.precio,
-              DatosProducto.cantidad
-            );
-          });
-        } else {
-          infoProducto.forEach((DatosProducto) => {
-            agregarProducto(
-              DatosProducto.nombre,
-              DatosProducto.moneda,
-              DatosProducto.imagen,
-              DatosProducto.precio,
-              DatosProducto.cantidad
-            );
-          });
-        }
+          let addPre = localStorage.getItem("preaddProd");
+          if (addPre == "true" || addPre == true) {
+            infoProducto.forEach((DatosProducto) => {
+              agregarProducto(
+                DatosProducto.nombre,
+                DatosProducto.moneda,
+                DatosProducto.imagen,
+                DatosProducto.precio,
+                DatosProducto.cantidad
+              );
+            });
+          } else {
+            localStorage.setItem("preaddProd", true);
+            const DatosProducto = {
+              id: product.id,
+              nombre: product.name,
+              moneda: product.currency,
+              precio: product.unitCost,
+              imagen: product.image,
+              cantidad: 1,
+            };
+            infoProducto.push(DatosProducto);
+            localStorage.setItem("infoProducto", JSON.stringify(infoProducto));
+            infoProducto.forEach((DatosProducto) => {
+              agregarProducto(
+                DatosProducto.nombre,
+                DatosProducto.moneda,
+                DatosProducto.imagen,
+                DatosProducto.precio,
+                DatosProducto.cantidad
+              );
+            });
+          }
       });
       var opciones = document.getElementsByName("opcionCompra");
       opciones.forEach((opcion) => {
